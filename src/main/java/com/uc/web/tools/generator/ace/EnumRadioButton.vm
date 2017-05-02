@@ -1,0 +1,8 @@
+<form:label path="${fieldName}" cssClass="control-label col-xs-12 col-sm-4">${fieldTitle}</form:label>
+<div class="col-xs-12 col-sm-8">
+#foreach(${code} in ${codes})
+  <label class="checkbox-inline">
+    <form:radionbutton path="${fieldName}" value="${code.code}">${code.value}</form:radionbutton>
+  </label>
+#end
+</div>

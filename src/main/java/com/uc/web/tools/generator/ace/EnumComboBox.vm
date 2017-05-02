@@ -1,0 +1,9 @@
+<form:label path="${fieldName}" cssClass="control-label col-xs-12 col-sm-4">#if(${required})<span class="red">*</span>#end${fieldTitle}：</form:label>
+<div class="col-xs-12 col-sm-8">
+  <form:select path="${fieldName}" cssClass="form-control chosen-select">
+    <form:option value="">请选择${fieldTitle}...</form:option>
+#foreach(${code} in ${codes})	
+    <form:option value="${code.code}">${code.value}</form:option>
+#end    
+  </form:select>
+</div>

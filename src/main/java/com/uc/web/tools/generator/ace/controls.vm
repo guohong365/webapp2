@@ -1,0 +1,93 @@
+#macro(controlBegin)
+<div class="col-xs-12 col-sm-6 col-lg-4">
+  <div class="form-group">
+#end
+
+#macro(controlEnd)
+  </div>
+</div>
+#end    
+
+
+#macro(checkBox $fieldName $fieldTitle)
+<div class="col-xs-12 col-sm-8 col-sm-offset-4">
+  <form:label path="$fieldName" cssClass="checkbox-inline">
+    <form:checkbox path="$fieldName"></form:checkbox>$fieldTitle
+  </form:label>
+</div>
+#end
+
+#macro(comboBox $upperCaseName $fieldName $fieldTitle $required)
+<form:label path="$fieldName" cssClass="control-label col-xs-12 col-sm-4">#if($requied)<span class="red">*</span>#end${fieldTitle}：</form:label>
+<div class="col-xs-12 col-sm-8">
+  <form:select path="$fieldName" cssClass="form-control chosen-select">
+    <form:option value="">请选择$fieldTitle...</form:option>
+    <form:options items="\${ _$upperCaseName}" itemLabel="value" itemValue="code" />
+  </form:select>
+</div>
+#end
+#macro(datePicker $fieldName $fieldTitle $required)
+<form:label path="$fieldName" cssClass="col-xs-12 col-sm-4 control-label">
+#if($required)<span class="red">*</span>#end$fieldTitle：</form:label>
+<div class="col-xs-12 col-sm-8">
+  <div class="input-group">
+    <form:input path="$fieldName" cssClass="form-control date-picker" />
+    <span class="input-group-addon">
+      <i class="fa fa-calendar"></i>
+    </span>
+  </div>
+</div>
+#end
+#macro(dateRangePicker $fieldName $fieldTitle $required)
+<form:label path="$fieldNameFrom" cssClass="col-xs-12 col-sm-4 control-label">#if($required)<span class="red">*</span>#end${fieldTitle}：</form:label>
+<div class="col-xs-12 col-sm-8">
+  <div class="input-daterange input-group">
+    <form:input path="$fieldNameFrom" cssClass="form-control" />
+    <span class="input-group-addon">至 </span>
+    <form:input path="$fieldNameTo" cssClass="form-control" />
+    <span class="input-group-addon">
+      <i class="fa fa-calendar"></i>
+    </span>
+  </div>
+</div>
+#end
+
+#macro(hidden $fieldName)
+<form:hidden path="$fieldName" /> 
+#end
+#macro(radioButton $fieldName $fieldTitle)
+<div class="col-xs-12 col-sm-offset-4">
+  <form:label path="$fieldName" cssClass="radio-inline">
+    <form:radiobutton path="$fieldName" cssClass="checkbox-inline"></form:radiobutton>$fieldTitle
+  </form:label>
+</div>
+#end
+#macro(staticText $fieldName $fieldTitle)
+<label class="control-label col-xs-12 col-sm-4\">$fieldTitle：</label>
+<div class="col-xs-12 col-sm-8" >
+  <p class="form-control-static">\${ detailInput.$fieldName}</p>
+</div>
+#end
+#macro(textArea $fieldName $fieldTitle $required)
+<form:label path="$fieldName" cssClass="control-label col-xs-12 col-sm-4">#if($required)<span class="red">*</span>#end${fieldTitle}：</form:label>
+<div class="col-xs-12 col-sm-8" >
+  <form:textarea path="$fieldName" cssClass="form-control" rows="3" />
+</div>
+#end
+#macro(textBox $fieldName $fieldTitle $required)
+<form:label path="$fieldName" cssClass="control-label col-xs-12 col-sm-4">#if($required)<span class="red">*</span>#end${fieldTitle}：</form:label>
+<div class="col-xs-12 col-sm-8" >
+  <form:input path="$fieldName" cssClass="form-control" />
+</div>
+#end
+#macro(textBoxRange $fieldName $fieldTitle $required)
+<form:label path="${fieldName}From" cssClass="control-label col-xs-12 col-sm-4">#if($required)<span class="red">*</span>#end${fieldTitle}：</form:label>
+<div class="col-xs-12 col-sm-8">
+  <div class="input-group">
+    <span class="input-group-addon">自</span>
+    <form:input cssClass="form-control" path="${fieldName}From" />
+    <span class="input-group-addon">至</span>
+    <form:input path="${fieldName}To" cssClass="form-control"/>
+  </div>
+</div>
+#end

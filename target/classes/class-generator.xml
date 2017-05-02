@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+
+	<!-- proxy -->
+	<bean id="detailControllerProxyGenerator" class="com.uc.web.tools.generator.ControllerProxyGenerator"
+		parent="commonParent">
+		<property name="useEntity" value="true" />
+		<property name="baseClass"
+			value="com.uc.web.controller.basic.AbstractIntegerKeyDetailControllerProxy" />
+		<property name="baseClassParameters">
+			<array>
+				<value type="com.uc.web.tools.generator.TypeParameter">ENTITY</value>
+			</array>
+		</property>
+		<property name="packageName" value="controller.proxy" />
+		<property name="suffix" value="DetailControllerProxy" />
+	</bean>
+	<bean id="listControllerProxyGenerator" class="com.uc.web.tools.generator.ControllerProxyGenerator"
+		parent="commonParent">
+		<property name="useEntity" value="true" />
+		<property name="baseClass"
+			value="com.uc.web.controller.basic.AbstractIntegerKeyControllerProxy" />
+		<property name="baseClassParameters">
+			<array>
+				<value type="com.uc.web.tools.generator.TypeParameter">QUERY</value>
+				<value type="com.uc.web.tools.generator.TypeParameter">ENTITY</value>
+			</array>
+		</property>
+		<property name="packageName" value="controller.proxy" />
+		<property name="suffix" value="ListControllerProxy" />
+	</bean>
+	
+
+	<!-- controller -->
+	<bean id="detailControllerGenerator" class="com.uc.web.tools.generator.ClassGeneratorImpl"
+		parent="commonParent">
+		<property name="baseClass"
+			value="com.uc.web.controller.basic.AbstractIntegerKeyDetailController" />
+		<property name="baseClassParameters">
+			<array>
+				<value type="com.uc.web.tools.generator.TypeParameter">ENTITY_INTERFACE</value>
+			</array>
+		</property>
+		<property name="interfacePackage" value="controller" />
+		<property name="interfaceSuffix" value="DetailController" />
+		<property name="packageName" value="controller.impl" />
+		<property name="suffix" value="DetailControllerImpl"></property>
+	</bean>
+	<bean id="listControllerGenerator" class="com.uc.web.tools.generator.ClassGeneratorImpl"
+		parent="commonParent">
+		<property name="baseClass"
+			value="com.uc.web.controller.basic.AbstractIntegerKeyListController" />
+		<property name="baseClassParameters">
+			<array>
+				<value type="com.uc.web.tools.generator.TypeParameter">QUERY_INTERFACE</value>
+				<value type="com.uc.web.tools.generator.TypeParameter">ENTITY_INTERFACE</value>
+			</array>
+		</property>
+		<property name="interfacePackage" value="controller" />
+		<property name="interfaceSuffix" value="ListController" />
+		<property name="packageName" value="controller.impl" />
+		<property name="suffix" value="ListControllerImpl" />
+	</bean>
+
+	<bean id="detailControllerInterfaceGenerator" class="com.uc.web.tools.generator.ClassGeneratorImpl"
+		parent="commonParent">
+		<property name="asInterface" value="true" />
+		<property name="baseClass"
+			value="com.uc.web.controller.basic.IntegerKeyDetailController" />
+		<property name="baseClassParameters">
+			<array>
+				<value type="com.uc.web.tools.generator.TypeParameter">ENTITY_INTERFACE</value>
+			</array>
+		</property>
+		<property name="packageName" value="controller" />
+		<property name="suffix" value="DetailController" />
+
+	</bean>
+	<bean id="listControllerInterfaceGenerator" class="com.uc.web.tools.generator.ClassGeneratorImpl"
+		parent="commonParent">
+		<property name="asInterface" value="true" />
+		<property name="baseClass"
+			value="com.uc.web.controller.basic.IntegerKeyListController" />
+		<property name="baseClassParameters">
+			<array>
+				<value type="com.uc.web.tools.generator.TypeParameter">QUERY_INTERFACE</value>
+				<value type="com.uc.web.tools.generator.TypeParameter">ENTITY_INTERFACE</value>
+			</array>
+		</property>
+		<property name="packageName" value="controller" />
+		<property name="suffix" value="ListController" />
+	</bean>
+	<!-- service -->
+	<bean id="detailServiceGenerator" class="com.uc.web.tools.generator.ClassGeneratorImpl"
+		parent="commonParent">
+		<property name="baseClass"
+			value="com.uc.web.service.basic.GenericIntegerKeyAppDetailService" />
+		<property name="baseClassParameters">
+			<array>
+				<value type="com.uc.web.tools.generator.TypeParameter">ENTITY_INTERFACE</value>
+			</array>
+		</property>
+		<property name="interfacePackage" value="service" />
+		<property name="interfaceSuffix" value="DetailService" />
+		<property name="packageName" value="service.impl" />
+		<property name="suffix" value="DetailServiceImpl" />
+	</bean>
+	<bean id="listServiceGenerator" class="com.uc.web.tools.generator.ClassGeneratorImpl"
+		parent="commonParent">
+		<property name="baseClass"
+			value="com.uc.web.service.basic.GenericIntegerKeyAppListService" />
+		<property name="baseClassParameters">
+			<array>
+				<value type="com.uc.web.tools.generator.TypeParameter">QUERY_INTERFACE</value>
+				<value type="com.uc.web.tools.generator.TypeParameter">ENTITY_INTERFACE</value>
+			</array>
+		</property>
+		<property name="interfacePackage" value="service" />
+		<property name="interfaceSuffix" value="ListService" />
+		<property name="packageName" value="service.impl" />
+		<property name="suffix" value="ListServiceImpl" />
+	</bean>
+	<bean id="detailServiceInterfaceGenerator" class="com.uc.web.tools.generator.ClassGeneratorImpl"
+		parent="commonParent">
+		<property name="asInterface" value="true" />
+		<property name="baseClass"
+			value="com.uc.web.service.basic.IntegerKeyAppDetailService" />
+		<property name="baseClassParameters">
+			<array>
+				<value type="com.uc.web.tools.generator.TypeParameter">ENTITY_INTERFACE</value>
+			</array>
+		</property>
+		<property name="packageName" value="service" />
+		<property name="suffix" value="DetailService" />
+
+	</bean>
+
+	<bean id="listServiceInterfaceGenertator" class="com.uc.web.tools.generator.ClassGeneratorImpl"
+		parent="commonParent">
+		<property name="asInterface" value="true" />
+		<property name="baseClass"
+			value="com.uc.web.service.basic.IntegerKeyAppListService" />
+		<property name="baseClassParameters">
+			<array>
+				<value type="com.uc.web.tools.generator.TypeParameter">QUERY_INTERFACE</value>
+				<value type="com.uc.web.tools.generator.TypeParameter">ENTITY_INTERFACE</value>
+			</array>
+		</property>
+		<property name="packageName" value="service" />
+		<property name="suffix" value="ListService" />
+	</bean>
+
+	<!-- =======common======== -->
+	<util:list id="listParameters">
+		<array>
+			<value type="com.uc.web.tools.generator.TypeParameter">QUERY_INTERFACE</value>
+			<value type="com.uc.web.tools.generator.TypeParameter">ENTITY_INTERFACE</value>
+		</array>
+	</util:list>
+	<util:list id="detailParameters">
+		<array>
+			<value type="com.uc.web.tools.generator.TypeParameter">ENTITY_INTERFACE</value>
+		</array>
+	</util:list>
+
+	<bean id="commonParent" abstract="true">
+		<property name="asInterface" value="false" />
+		<property name="baseClass" value="" />
+		<property name="baseClassParameters">
+			<array></array>
+		</property>
+		<property name="entityInterfacePackage" value="domain" />
+		<property name="entityInterfacePrefix" value="I" />
+		<property name="entityInterfaceSuffix" value="" />
+		<property name="interfacePackage" value="" />
+		<property name="interfacePrefix" value="" />
+		<property name="interfaceSuffix" value="" />
+		<property name="packageName" value="" />
+		<property name="packageRelatedEntity" value="false" />
+		<property name="prefix" value="" />
+		<property name="queryInterfacePackage" value="forms" />
+		<property name="queryInterfacePrefix" value="I" />
+		<property name="queryInterfaceSuffix" value="QueryForm" />
+		<property name="queryPackage" value="forms.entity" />
+		<property name="queryPrefix" value="" />
+		<property name="querySuffix" value="QueryForm" />
+		<property name="suffix" value="" />
+		<property name="useEntity" value="false" />
+	</bean>
+
+</beans>
