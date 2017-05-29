@@ -9,11 +9,11 @@ import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerializeWriter;
 
-public class BigDecimalFormatSerilizer  implements ObjectSerializer  {
+public class BigDecimalFormatSerializer  implements ObjectSerializer  {
 	
 	private DecimalFormat decimalFormat;
 	
-	public BigDecimalFormatSerilizer(DecimalFormat decimalFormat) {
+	public BigDecimalFormatSerializer(DecimalFormat decimalFormat) {
 		this.decimalFormat=decimalFormat;
 	}
 
