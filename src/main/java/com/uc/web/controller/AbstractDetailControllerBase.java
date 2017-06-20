@@ -114,7 +114,7 @@ public abstract class AbstractDetailControllerBase<KeyType,	DetailType>
 			detail=onCreateNewDetail();
 			getLogger().trace("-------record created ---------");
 			getLogger().trace(detail.toString());
-			addDetailToModel(action, detail, model);
+			//addDetailToModel(action, detail, model);
 			getLogger().trace("------ prepare new page codes -----");
 			codes=onGetNewCodes(user);
 			logCodes(codes);			
