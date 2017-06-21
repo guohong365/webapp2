@@ -22,11 +22,9 @@ public class SystemConfig {
 			InputStreamReader stream=new InputStreamReader( SystemConfig.class.getResourceAsStream("/"+cfgFile), "UTF-8");
 
 			configs.load(stream);
-			System.out.println(configs.toString());
 			stream.close();
 		}
 		catch (Exception e) {
-			System.out.println("load faild[]" + cfgFile + "]");
 		}
 	}
 	public static String getConfig(String name, String defaultValue){
