@@ -146,7 +146,7 @@ public abstract class AbstractListControllerBase<KeyType,QueryFormType extends Q
 		getLogger().trace("-------查询数据-------");
 		getAppListService().select(webForm);
 		getLogger().trace("------获得数据["+webForm.getData().size()+"]------" );
-		addWebListFromToModel(webForm, model);
+		addWebListFormToModel(webForm, model);
 		
 		getLogger().trace("------ 加工修改列表结果--------");
 		afterListSelected(webForm);
@@ -192,7 +192,7 @@ public abstract class AbstractListControllerBase<KeyType,QueryFormType extends Q
 		getLogger().trace("------ 加工修改列表结果--------");
 		afterListSelected(webForm);
 		getLogger().trace("-------加工修改列表结果完成---- ");		
-		addWebListFromToModel(webForm, model);		
+		addWebListFormToModel(webForm, model);		
 		getLogger().trace("------添加类表附加信息--------");
 		onSetListModel(user, model);
 		getLogger().trace("------附加信息添加完成--------");
@@ -226,7 +226,7 @@ public abstract class AbstractListControllerBase<KeyType,QueryFormType extends Q
 		getLogger().trace("-------加工修改列表结果完成---- ");	
 		
 		
-		addWebListFromToModel(webForm, model);
+		addWebListFormToModel(webForm, model);
 		
 		getLogger().trace("------添加类表附加信息--------");
 		onSetListModel(user, model);
@@ -289,7 +289,7 @@ public abstract class AbstractListControllerBase<KeyType,QueryFormType extends Q
 		
 	}
 
-	protected void addWebListFromToModel(WebListFormBase<KeyType, QueryFormType, DetailType> webListFormBase, Model model) {
+	protected void addWebListFormToModel(WebListFormBase<KeyType, QueryFormType, DetailType> webListFormBase, Model model) {
 		model.addAttribute(PARAM_NAME_QUERY_INPUT, webListFormBase.getQuery());
 		model.addAttribute(PARAM_NAME_RECORDS, webListFormBase.getData());
 		model.addAttribute(PARAM_NAME_PAGE_CTRL,webListFormBase.getPageCtrl());

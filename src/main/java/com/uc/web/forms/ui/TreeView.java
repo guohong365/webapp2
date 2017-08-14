@@ -1,5 +1,7 @@
 package com.uc.web.forms.ui;
 
+import com.uc.utils.filter.IFilter;
+
 public class TreeView{
 	private TreeViewNode root=new TreeViewNode();
 	
@@ -43,7 +45,6 @@ public class TreeView{
 		if(item==null){
 			return null;
 		}
-		item.setParent(parent);		
 		item.setRoot(getRoot());
 		if(parent==null){
 			getRoot().add(item);
@@ -56,4 +57,25 @@ public class TreeView{
 	public void remove(TreeViewNode item){
 		item.getParent().getChildren().remove(item);
 	}
+	
+	
+	
+	public <T> TreeViewNode findNode(IFilter<T> filter){
+		return findNode(getRoot(), filter);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> TreeViewNode findNode(TreeViewNode root, IFilter<T> filter){
+		if(filter.filter((T)root.getTag()))
+			return root;
+		for(TreeViewNode node: root.getChildren()){
+			if(filter.filter((T)node.getTag())){
+				return node;
+			}
+			TreeViewNode ret= findNode(node, filter);
+			if(ret!=null) return ret;
+		}
+		return null;
+	}
+	
 }

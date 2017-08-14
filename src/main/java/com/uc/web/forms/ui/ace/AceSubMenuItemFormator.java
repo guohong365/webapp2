@@ -16,7 +16,7 @@ public class AceSubMenuItemFormator extends AbstractUIFormatorBase implements IU
 
 	@Override
 	public void formatHTML(TreeViewNode componet, StringBuilder builder){
-		TreeViewNode node=(TreeViewNode) componet;
+		TreeViewNode node=componet;
 			MenuTreeItem<?> menuItem=(MenuTreeItem<?>) node.getTag();
 			builder.append(String.format(format, menuItem.getIcon(), menuItem.getName()));
 	}

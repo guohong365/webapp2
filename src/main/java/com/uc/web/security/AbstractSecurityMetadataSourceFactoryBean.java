@@ -52,6 +52,7 @@ public class AbstractSecurityMetadataSourceFactoryBean<KeyType>
 		Collection<ConfigAttribute> configAttributes=null;
 		for (IRoleFunctionDefine<KeyType> resource : list) {
 			
+			
 			if(!resource.getFunction().getUriPattern().equals(pattern)){ //新的pattern				
 				if(configAttributes!=null && !configAttributes.isEmpty()){					
 					this.put(matcher, configAttributes); //保存之前的configAttributes

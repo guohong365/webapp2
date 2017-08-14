@@ -30,11 +30,14 @@ public class TreeViewFormator extends AbstractUIFormatorBase implements IUIForma
 	
 	protected void format(TreeViewNode node, StringBuilder builder){
 		IUIFormator<TreeViewNode> formator=nodeFormatorProvider.getFormator(node);
-		ContainerProvider provider=formator.getContainerProvider();
+		
+		ContainerProvider provider=formator==null ? getContainerProvider() : formator.getContainerProvider();
 		if(provider!=null){
 			builder.append(provider.getHeader());
 		}
-		formator.formatHTML(node, builder);		
+		if(formator!=null){
+			formator.formatHTML(node, builder);		
+		}
 		for(TreeViewNode subitem:node.getChildren()){
 			format(subitem, builder);
 		}

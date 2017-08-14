@@ -1,10 +1,6 @@
-package com.uc.web.forms.ui.ace;
+package com.uc.web.forms.ui;
 
-import com.uc.web.forms.ui.IUIFormator;
-import com.uc.web.forms.ui.TreeViewNode;
-import com.uc.web.forms.ui.NodeFormatorProvider;
-
-public class AceNodeFormatorProvider implements NodeFormatorProvider {
+public class NodeFormatorProviderImpl implements NodeFormatorProvider {
 	
 	IUIFormator<TreeViewNode> topMenuItemFormator;
 	IUIFormator<TreeViewNode> subMenuItemFormator;

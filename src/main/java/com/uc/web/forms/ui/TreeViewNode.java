@@ -78,11 +78,14 @@ public class TreeViewNode {
 	}
 
 	public void add(TreeViewNode node){
+		node.setParent(this);
 		getChildren().add(node);
 	}
 	
 	public void remove(TreeViewNode node){
 		getChildren().remove(node);
+		node.setParent(null);
+		node.setRoot(null);
 	}
 
 
