@@ -6,20 +6,20 @@ public abstract class AbstractOrgnizationQueryForm<KeyType>
 	extends AbstractQueryForm<KeyType> {
 
     
-	private String queryOrgName;
-	private boolean queryIsAll;
+	private String queryName;
+	private boolean queryAll;
 	
-	public String getQueryOrgName() {
-		return queryOrgName;
+	public String getQueryName() {
+		return queryName;
 	}
-	public void setQueryOrgName(String queryOrgName) {
-		this.queryOrgName = queryOrgName;
+	public void setQueryName(String queryOrgName) {
+		this.queryName = queryOrgName;
 	}
 	public Boolean getQueryAll() {
-		return queryIsAll;
+		return queryAll;
 	}
 	public void setQueryAll(Boolean queryIsAll) {
-		this.queryIsAll = queryIsAll;
+		this.queryAll = queryIsAll;
 	}
 
 }

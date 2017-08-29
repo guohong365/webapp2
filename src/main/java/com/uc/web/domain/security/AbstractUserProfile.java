@@ -5,7 +5,6 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import com.uc.utils.LoggerSupportor;
 import com.uc.web.domain.AbstractUserRoles;
 import com.uc.web.domain.Menu;
 import com.uc.web.domain.IMenuTree;
@@ -14,7 +13,7 @@ import com.uc.web.domain.Role;
 
 public abstract class AbstractUserProfile<KeyType>
 	extends AbstractUserRoles<KeyType>
-	implements UserProfile<KeyType>, LoggerSupportor {
+	implements UserProfile<KeyType> {
 	
 	private Orgnization<KeyType> orgnization;
 	
@@ -67,13 +66,11 @@ public abstract class AbstractUserProfile<KeyType>
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		getLogger().trace("取用户【"+ getUsername() +"】的权限.");
 		synchronized (AbstractUserProfile.class) {
 			if(authoryties==null){
 				authoryties=new ArrayList<>();
 			}
 			for(Role<KeyType> role : getRoles()){
-				getLogger().trace("添加角色【"+ role.getId() +":" + role.getName() +"】");
 				GrantedAuthority authority=new SimpleGrantedAuthority("ROLE_" + role.getId());
 				authoryties.add(authority);
 			}
