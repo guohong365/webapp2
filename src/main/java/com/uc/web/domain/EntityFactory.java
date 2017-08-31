@@ -1,5 +1,5 @@
 package com.uc.web.domain;
 
-public interface IEntiryFactory {
+public interface EntityFactory {
 	<T> T CreateInstance(Class<T> class1);
 }

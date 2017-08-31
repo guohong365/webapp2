@@ -11,6 +11,8 @@ import com.uc.web.domain.security.UserProfile;
 public abstract class AbstractQueryForm<KeyType> extends EntityBase
 	implements QueryForm<KeyType> {
 	
+	private Boolean queryAll;
+	
 	private String queryOrder;
 	private String queryOrderBy;
 	
@@ -81,7 +83,9 @@ public abstract class AbstractQueryForm<KeyType> extends EntityBase
 		}
 		return queryOrderByClause;
 	}
-	protected abstract void buildOrderByColumnMap();
+	protected void buildOrderByColumnMap(){
+		
+	}
 
 	@Override
 	public void addLimits(String name, Object item){
@@ -101,5 +105,11 @@ public abstract class AbstractQueryForm<KeyType> extends EntityBase
 	@Override
 	public void clearLimits(){
 		queryLimits.clear();
+	}
+	public Boolean getQueryAll() {
+		return queryAll;
+	}
+	public void setQueryAll(Boolean queryAll) {
+		this.queryAll = queryAll;
 	}
 }

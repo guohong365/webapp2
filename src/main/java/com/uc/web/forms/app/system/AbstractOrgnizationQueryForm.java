@@ -5,21 +5,19 @@ import com.uc.web.forms.AbstractQueryForm;
 public abstract class AbstractOrgnizationQueryForm<KeyType> 
 	extends AbstractQueryForm<KeyType> {
 
-    
 	private String queryName;
-	private boolean queryAll;
+	private KeyType queryParent;
 	
 	public String getQueryName() {
 		return queryName;
 	}
-	public void setQueryName(String queryOrgName) {
-		this.queryName = queryOrgName;
+	public void setQueryName(String queryName) {
+		this.queryName = queryName;
 	}
-	public Boolean getQueryAll() {
-		return queryAll;
+	public KeyType getQueryParent() {
+		return queryParent;
 	}
-	public void setQueryAll(Boolean queryIsAll) {
-		this.queryAll = queryIsAll;
+	public void setQueryParent(KeyType queryParent) {
+		this.queryParent = queryParent;
 	}
-
 }

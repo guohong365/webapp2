@@ -1,6 +1,6 @@
 package com.uc.web.domain;
 
-public interface NamedObjct<KeyType> {
+public interface NamedObjct<KeyType> extends WithId<KeyType> {
 	public KeyType getId();
 	public void setId(KeyType id);
 	
