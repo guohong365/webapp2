@@ -1,46 +1,29 @@
 package com.uc.web.forms.app.system;
 
-import com.uc.web.forms.AbstractQueryForm;
+import com.uc.web.forms.QueryFormImpl;
 
 public abstract class AbstractUserQueryForm<KeyType>
-	extends AbstractQueryForm<KeyType>  {
+	extends QueryFormImpl<KeyType>  {
 	
-	private String queryUserId;
-	private String queryUserName;
-	private KeyType queryUserOrgId;
-	
-	private Boolean queryAll;
-
-	public String getQueryUserId() {
-		return queryUserId;
+	private String queryLoginId;
+	private String queryName;
+	private KeyType queryOrg;
+	public String getQueryLoginId() {
+		return queryLoginId;
 	}
-
-	public void setQueryUserId(String queryUserId) {
-		this.queryUserId = queryUserId;
+	public void setQueryLoginId(String queryLoginId) {
+		this.queryLoginId = queryLoginId;
 	}
-
-	public String getQueryUserName() {
-		return queryUserName;
+	public String getQueryName() {
+		return queryName;
 	}
-
-	public void setQueryUserName(String queryUserName) {
-		this.queryUserName = queryUserName;
+	public void setQueryName(String queryName) {
+		this.queryName = queryName;
 	}
-
-	public KeyType getQueryUserOrgId() {
-		return queryUserOrgId;
+	public KeyType getQueryOrg() {
+		return queryOrg;
 	}
-
-	public void setQueryUserOrgId(KeyType queryUserOrgId) {
-		this.queryUserOrgId = queryUserOrgId;
+	public void setQueryOrg(KeyType queryOrg) {
+		this.queryOrg = queryOrg;
 	}
-
-	public Boolean getQueryAll() {
-		return queryAll;
-	}
-
-	public void setQueryAll(Boolean queryAll) {
-		this.queryAll = queryAll;
-	}
-
 }

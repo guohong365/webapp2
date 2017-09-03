@@ -5,7 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.util.StringUtils;
 
-public abstract class AbstractCaptcha implements ICaptcha {
+import com.uc.web.service.ServiceBase;
+
+public abstract class AbstractCaptcha extends ServiceBase implements CaptchaService {
 	public static final String DEFAULT_CAPTCHA_KEY="captcha_key";
 	public static final String DEFAULT_CAPTCHA_VALUE_NAME="capthca";
 	

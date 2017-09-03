@@ -1,6 +1,8 @@
 package com.uc.utils.export.excel;
 
-public interface IExcelExportOptions {
+import com.uc.utils.export.ExportOptions;
+
+public interface IExcelExportOptions extends ExportOptions {
 	public IExcelCellOptions getTitleCellOptions();
 	public IExcelCellOptions getAddtionalCellOptions();
 	public IExcelCellOptions getColumnHeaderCellOptions();

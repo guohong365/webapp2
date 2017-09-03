@@ -1,31 +1,29 @@
 package com.uc.web.forms.app.system;
 
-import com.uc.web.forms.AbstractQueryForm;
+import com.uc.web.forms.QueryFormImpl;
 
 public abstract class AbstractFunctionQureyForm<KeyType> 
-	extends AbstractQueryForm<KeyType> {
-
+	extends QueryFormImpl<KeyType> {
 	
-	public String getQueryFuncName() {
-		return queryFuncName;
+	public String getQueryName() {
+		return queryName;
 	}
-	public void setQueryFuncName(String queryFuncName) {
-		this.queryFuncName = queryFuncName;
+	public void setQueryName(String queryFuncName) {
+		this.queryName = queryFuncName;
 	}
-	public String getQueryFuncUri() {
-		return queryFuncUri;
+	public String getQueryUri() {
+		return queryUri;
 	}
-	public void setQueryFuncUri(String queryFuncUri) {
-		this.queryFuncUri = queryFuncUri;
+	public void setQueryUri(String queryFuncUri) {
+		this.queryUri = queryFuncUri;
 	}
-	public boolean isQueryIsAll() {
-		return queryIsAll;
+	public String getQueryPattern() {
+		return queryPattern;
 	}
-	public void setQueryIsAll(boolean queryIsAll) {
-		this.queryIsAll = queryIsAll;
+	public void setQueryPattern(String queryPattern) {
+		this.queryPattern = queryPattern;
 	}
-	private String queryFuncName;
-	private String queryFuncUri;
-	private boolean queryIsAll;
-
+	private String queryName;
+	private String queryUri;
+	private String queryPattern;
 }

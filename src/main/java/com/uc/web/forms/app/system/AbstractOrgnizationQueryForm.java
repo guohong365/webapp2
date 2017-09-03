@@ -1,9 +1,9 @@
 package com.uc.web.forms.app.system;
 
-import com.uc.web.forms.AbstractQueryForm;
+import com.uc.web.forms.QueryFormImpl;
 
 public abstract class AbstractOrgnizationQueryForm<KeyType> 
-	extends AbstractQueryForm<KeyType> {
+	extends QueryFormImpl<KeyType> {
 
 	private String queryName;
 	private KeyType queryParent;

@@ -4,6 +4,6 @@ import com.uc.web.forms.QueryForm;
 
 public interface AppService<KeyType,QueryFormType extends QueryForm<KeyType>, DetailType extends Object> 
 	extends AppDetailService<KeyType, DetailType>,
-			AppListService<KeyType, QueryFormType, DetailType>, 
+			AppWebListService<QueryFormType, DetailType>, 
 			Service{
 }

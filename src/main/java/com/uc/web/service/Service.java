@@ -7,4 +7,5 @@ public interface Service extends LoggerSupportor {
 	Service getParent();
 	void setParent(Service parent);
 	Mapper getMapper();
+	void setMapper(Mapper mapper);
 }

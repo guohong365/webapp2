@@ -10,46 +10,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.uc.utils.export.ExportType;
 import com.uc.web.forms.QueryForm;
-import com.uc.web.forms.ui.componet.PageCtrl;
 
-public abstract class AbstractControllerProxy<KeyType, QueryFormType extends QueryForm<KeyType>,DetailType> 
-	extends ControllerProxySupportImpl<KeyType>
+public abstract class AbstractControllerProxy<KeyType, QueryFormType extends QueryForm<KeyType>, EntityType> 
+	extends ControllerProxyBaseImpl
 	implements  
-		GenericControllerProxy<KeyType, QueryFormType,DetailType>{
-	
-	private GeneralController<KeyType, QueryFormType,DetailType> controller;
-	
+		GenericControllerProxy<KeyType, QueryFormType,EntityType>{
+		
+	@SuppressWarnings("unchecked")
 	@Override
-	public GeneralController<KeyType, QueryFormType,DetailType> getController(){
-		return controller;
-	}
-	@Override
-	public void setContorller(GeneralController<KeyType, QueryFormType,DetailType> controller){
-		this.controller=controller;
+	public GeneralController<KeyType, QueryFormType, EntityType> getController(){
+		return (GeneralController<KeyType, QueryFormType, EntityType>) super.getController();
 	}
 	
-	@Override
-	@ModelAttribute(value=PARAM_NAME_MODEL_TITLE)
-	public String getModelTitle() {
-		return getController().getModelTitle();
-	}
-	
-	@ModelAttribute(value=PARAM_NAME_ENTITY_NAME)
-	@Override
-	public String getEntityName(){
-		return getController().getEntityName();
-	}
-	
-	@Override
-	@ModelAttribute(value=PARAM_NAME_BASE_URL)
-	public String getBaseUri(){
-		return onGetBaseUrl();
-	}
-
-	protected abstract String onGetBaseUrl();
-
 	@Override
 	@RequestMapping(value=URI_PATH_LIST, method=RequestMethod.GET)
 	public String getListPage(Model model) {
@@ -61,10 +34,8 @@ public abstract class AbstractControllerProxy<KeyType, QueryFormType extends Que
 	public String postTablePage(
 			@ModelAttribute(value=PARAM_NAME_QUERY_INPUT)
 			QueryFormType queryInput,
-			@ModelAttribute(value=PARAM_NAME_PAGE_CTRL)
-			PageCtrl pageCtrl, 
 			Model model) {
-		return getController().postTablePage(queryInput, pageCtrl, model);
+		return getController().postTablePage(queryInput, model);
 	}	
 
 	@Override
@@ -82,10 +53,8 @@ public abstract class AbstractControllerProxy<KeyType, QueryFormType extends Que
 			@ModelAttribute(value=PARAM_NAME_QUERY_INPUT)
 			QueryFormType queryForm, 
 			HttpServletRequest request, 
-			HttpServletResponse response,
-			@RequestParam(value=PARAM_NAME_EXPORT_TYPE, required=false, defaultValue=ExportType.TYPE_EXCEL)
-			String type) {
-		getController().exportFile(queryForm, request, response, type);
+			HttpServletResponse response) {
+		getController().exportFile(queryForm, request, response);
 	}
 
 	@Override
@@ -106,18 +75,13 @@ public abstract class AbstractControllerProxy<KeyType, QueryFormType extends Que
 			@RequestParam(value=PARAM_NAME_ACTION)
 			String action,
 			@ModelAttribute(value=PARAM_NAME_DETAIL)
-			DetailType detail) {
+			EntityType detail) {
 		return getController().postDetailPage(action, detail);
 	}
 	
-
-	@Override
-	public String getPageBasePath() {
-		return getController().getPageBasePath();
-	}
 	@Override
 	public QueryFormType createQueryForm() {
-		return getController().createQueryForm();
+		return null;
 	}
 
 }

@@ -13,7 +13,7 @@ import com.uc.web.domain.Role;
 
 public abstract class AbstractUserProfile<KeyType>
 	extends AbstractUserRoles<KeyType>
-	implements UserProfile<KeyType> {
+	implements UserProfileBase<KeyType> {
 	
 	private Orgnization<KeyType> orgnization;
 	

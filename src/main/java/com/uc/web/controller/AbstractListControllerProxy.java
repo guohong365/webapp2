@@ -8,40 +8,40 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.uc.web.forms.QueryForm;
-import com.uc.web.forms.ui.componet.PageCtrl;
+import com.uc.web.forms.ListQueryForm;
 
-public abstract class AbstractListControllerProxy<
-	KeyType,
-	QueryFormType extends QueryForm<KeyType>, 
-	DetailType>
-	extends ControllerProxySupportImpl<KeyType>
-	implements ListControllerProxy<KeyType, QueryFormType, DetailType> {
+public abstract class AbstractListControllerProxy<QueryFormType extends ListQueryForm>
+	extends ControllerProxyBaseImpl
+	implements ListControllerProxy<QueryFormType>, ExportControllerProxy<QueryFormType> {
 	
-	private ListController<KeyType, QueryFormType, DetailType> listController;
+	@SuppressWarnings("unchecked")
 	@Override
-	public void setListController(ListController<KeyType, QueryFormType, DetailType> listController) {
-		this.listController = listController;
+	public ListController<QueryFormType> getController() {
+		return (ListController<QueryFormType>) super.getController();
 	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
-	public ListController<KeyType, QueryFormType, DetailType> getListController() {
-		return listController;
+	public ExportController<QueryFormType> getExportController(){
+		if(getController() instanceof ExportController){
+			return (ExportController<QueryFormType>) getController();
+		}
+		return null;
 	}
 
 	@Override
 	@RequestMapping(value=URI_PATH_LIST, method=RequestMethod.GET)
 	public String getListPage(Model model) {		
-		return getListController().getListPage(model);
+		return getController().getListPage(model);
 	}
 
 	@Override
 	@RequestMapping(value=URI_PATH_TABLE, method=RequestMethod.POST)
 	public String postTablePage(
 			@ModelAttribute(PARAM_NAME_QUERY_INPUT)
-			QueryFormType queryInput, 
-			@ModelAttribute(PARAM_NAME_PAGE_CTRL)
-			PageCtrl pageCtrl, Model model) {
-		return getListController().postTablePage(queryInput, pageCtrl, model);
+			QueryFormType queryInput,
+			Model model) {
+		return getController().postTablePage(queryInput, model);
 	}
 
 	@Override
@@ -49,38 +49,21 @@ public abstract class AbstractListControllerProxy<
 	public String postListPage(
 			@ModelAttribute(PARAM_NAME_QUERY_INPUT)
 			QueryFormType queryForm, Model model) {
-		return getListController().postListPage(queryForm, model);
-	}
-
-	@Override
-	public String getPageBasePath() {
-		return null;
-	}
-
-	@Override
-	@ModelAttribute(value=PARAM_NAME_MODEL_TITLE)
-	public String getModelTitle() {
-		return getListController().getModelTitle();
+		return getController().postListPage(queryForm, model);
 	}
 
 	@Override
 	@RequestMapping(value=URI_PATH_EXPORT, method=RequestMethod.POST)
 	public void exportFile(
 			@ModelAttribute(PARAM_NAME_QUERY_INPUT)
-			QueryFormType queryForm, HttpServletRequest request, HttpServletResponse response,
-			String type) {
-		getListController().exportFile(queryForm, request, response, type);
+			QueryFormType queryForm, HttpServletRequest request, HttpServletResponse response) {
+		if(getExportController()!=null){
+			getExportController().exportFile(queryForm, request, response);
+		}
 	}
-
 	@Override
-	@ModelAttribute(value=PARAM_NAME_BASE_URL)
-	public String getBaseUri() {
-		return onGetBaseUri();
+	public QueryFormType createQueryForm(){
+		return null;
 	}
-	protected abstract String onGetBaseUri();
 	
-	@Override
-	public QueryFormType createQueryForm() {
-		return getListController().createQueryForm();
-	}
 }

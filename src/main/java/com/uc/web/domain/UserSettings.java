@@ -1,7 +1,7 @@
 package com.uc.web.domain;
 
-import com.uc.web.domain.security.UserProfile;
+import com.uc.web.domain.security.UserProfileBase;
 
 public interface UserSettings<KeyType> extends Settings {
-	UserProfile<KeyType> getOwner();
+	UserProfileBase<KeyType> getOwner();
 }

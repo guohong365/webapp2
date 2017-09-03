@@ -1,23 +1,15 @@
 package com.uc.web.forms.app.system;
 
-import com.uc.web.forms.AbstractQueryForm;
+import com.uc.web.forms.QueryFormImpl;
 
 public abstract class AbstractRoleQueryForm<KeyType> 
-	extends AbstractQueryForm<KeyType>{
+	extends QueryFormImpl<KeyType>{
 
-	public String getQueryRoleName() {
-		return queryRoleName;
+	public String getQueryName() {
+		return queryName;
 	}
-	public void setQueryRoleName(String queryRoleName) {
-		this.queryRoleName = queryRoleName;
+	public void setQueryName(String queryRoleName) {
+		this.queryName = queryRoleName;
 	}
-	public boolean isQueryAll() {
-		return queryAll;
-	}
-	public void setQueryAll(boolean _queryAll) {
-		this.queryAll = _queryAll;
-	}
-
-	private String queryRoleName;
-	private boolean queryAll;
+	private String queryName;
 }

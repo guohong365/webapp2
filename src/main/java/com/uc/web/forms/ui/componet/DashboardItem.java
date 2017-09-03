@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.ui.Model;
 
 import com.uc.web.forms.ui.IUIFormator;
+import com.uc.web.service.Service;
 
 public interface DashboardItem {
 	public static final String DASHBOARDS="dashboards";
@@ -12,7 +13,10 @@ public interface DashboardItem {
 	public static final String VALUE_TITLE="title";
 	IUIFormator<? extends DashboardItem> getFormatter();
 	void setFormatter(IUIFormator<? extends DashboardItem> formatter);
-	
+	DashboardItem getParent();
+	Service getService();
+	void setService(Service service);
+	void setParent(DashboardItem parent);
 	String getTitle();
 	void setTitle(String title);
 	String getName();

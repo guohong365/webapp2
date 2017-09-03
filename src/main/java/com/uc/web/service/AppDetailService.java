@@ -1,6 +1,6 @@
 package com.uc.web.service;
 
-public interface AppDetailService<DetailKeyType, DetailType extends Object> extends Service, AppServiceErrorHandler {
+public interface AppDetailService<DetailKeyType, DetailType extends Object> extends Service{
 	DetailType selectById(DetailKeyType id);	
 	int update(DetailType entity);
 	int updateSelective(DetailType entity);

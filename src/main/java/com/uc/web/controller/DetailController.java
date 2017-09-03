@@ -2,17 +2,9 @@ package com.uc.web.controller;
 
 import org.springframework.ui.Model;
 
-public interface DetailController<KeyType, DetailType> 
-	extends	ControllerSupport<KeyType> {
-	//----------- get detail ------------------------
+public interface DetailController<KeyType, EntityType> 
+	extends	ControllerBase {	
 	String getDetailPage(String action, KeyType recordId, Model model);
-
-	//-------- post detail --------------------------------
-	String postDetailPage(String action, DetailType detail);
-
-	String getModelTitle();
-	String getPageBasePath();
-
+	String postDetailPage(String action, EntityType detail);	
 	String getEntityName();
-
 }

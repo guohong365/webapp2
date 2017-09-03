@@ -2,12 +2,10 @@ package com.uc.web.controller;
 
 import com.uc.web.forms.DetailListQueryForm;
 
-public interface DetailListControllerProxy<KeyType,DetailType,QueryFormType extends DetailListQueryForm<KeyType>,DetailListType> 
+public interface DetailListControllerProxy<KeyType,EntityType,DetailQueryFormType extends DetailListQueryForm<KeyType>> 
 	extends
-		DetailControllerProxy<KeyType, DetailType>,
-		DetailListController<KeyType, DetailType, QueryFormType, DetailListType>{
-	
-	DetailListController<KeyType, DetailType, QueryFormType, DetailListType> getDetailListController();
-	void setDetailListController(DetailListController<KeyType, DetailType, QueryFormType, DetailListType> controller);
-
+		DetailControllerProxy<KeyType, EntityType>,
+		DetailListController<KeyType, EntityType, DetailQueryFormType>{
+	@Override
+	DetailListController<KeyType, EntityType, DetailQueryFormType> getController();
 }

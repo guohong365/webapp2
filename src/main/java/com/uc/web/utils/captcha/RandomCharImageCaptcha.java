@@ -14,21 +14,21 @@ public class RandomCharImageCaptcha extends AbstractCaptcha {
 	private static final int DEFAULT_IMAGE_WIDTH=80;
 	private static final int DEFAULT_IMAGE_HEIGHT=26;
 	
-	private ICharCodeCaptchaGenerator captchaGenerator;
-	private ICharCodeCaptchaGenerator defaultCaptchaGenerator=new DetaultCaptchaGenerator();
-	private IRandomCharImageGenerator charImageGenerator;
+	private CharCodeCaptchaGenerator captchaGenerator;
+	private CharCodeCaptchaGenerator defaultCaptchaGenerator=new DetaultCaptchaGenerator();
+	private RandomCharImageGenerator charImageGenerator;
 	private Random random=new Random();
 	private int captchaCount;
 	private int imageWidth;
 	private int imageHeight;
 	
-	public ICharCodeCaptchaGenerator getCaptchaGenerator() {
+	public CharCodeCaptchaGenerator getCaptchaGenerator() {
 		if(captchaGenerator==null)
 			return defaultCaptchaGenerator;
 		return captchaGenerator;
 	}
 
-	public void setCaptchaGenerator(ICharCodeCaptchaGenerator captchaGenerator) {
+	public void setCaptchaGenerator(CharCodeCaptchaGenerator captchaGenerator) {
 		this.captchaGenerator = captchaGenerator;
 	}
 
@@ -60,11 +60,11 @@ public class RandomCharImageCaptcha extends AbstractCaptcha {
 		this.imageHeight = imageHeight;
 	}
 
-	public IRandomCharImageGenerator getCharImageGenerator() {
+	public RandomCharImageGenerator getCharImageGenerator() {
 		return charImageGenerator;
 	}
 
-	public void setCharImageGenerator(IRandomCharImageGenerator charImageGenerator) {
+	public void setCharImageGenerator(RandomCharImageGenerator charImageGenerator) {
 		this.charImageGenerator = charImageGenerator;
 	}
 

@@ -12,8 +12,8 @@ import com.uc.web.domain.Code;
 import com.uc.web.domain.security.UserProfile;
 import com.uc.web.service.AppDetailService;
 
-public abstract class AbstractDetailControllerBase<KeyType,	DetailType> 
-	extends ControllerSupportImpl<KeyType> {
+public class AbstractDetailControllerBase<KeyType,	EntityType> 
+	extends ControllerBaseImpl {
 
 	protected static final String PAGE_VIEW = "/view";
 	protected static final String PAGE_MODIFY = "/modify";
@@ -44,21 +44,18 @@ public abstract class AbstractDetailControllerBase<KeyType,	DetailType>
 		return getPageBasePath() + PAGE_NEW;
 	}
 
-	private AppDetailService<KeyType, DetailType> appDetailService;
-	
-	public void setAppDetailService(AppDetailService<KeyType, DetailType> appDetailService) {
-		this.appDetailService = appDetailService;
+	@SuppressWarnings("unchecked")
+	public AppDetailService<KeyType, EntityType> getService(){
+		if(super.getService() instanceof AppDetailService)
+			return (AppDetailService<KeyType, EntityType>) super.getService();
+		return null;
 	}
 	
-	public AppDetailService<KeyType, DetailType> getAppDetailService() {
-		return appDetailService;
-	}
-
 	private void logCodes(
-			Map<String, List<? extends Code<KeyType>>> codes) {
+			Map<String, List<? extends Code<?>>> codes) {
 		if(getLogger().isTraceEnabled() && codes!=null){
 			getLogger().trace("--------加载查询条件代码:" + codes.size() + "个...");
-			for(Entry<String, List<? extends Code<KeyType>>> entry: codes.entrySet()){
+			for(Entry<String, List<? extends Code<?>>> entry: codes.entrySet()){
 				if(entry!=null){
 					getLogger().trace("\t 代码: ["+entry.getKey()+"] " + entry.getValue());
 				}
@@ -67,51 +64,57 @@ public abstract class AbstractDetailControllerBase<KeyType,	DetailType>
 		}
 	}
 	
-	private String detailClassName;
-	public void setDetailClassName(String detailClassName) {
-		this.detailClassName = detailClassName;
+	private String entityClassName;
+	
+	public void setEntityClassName(String entityClassName) {
+		this.entityClassName = entityClassName;
 	}
-	public String getDetailClassName() {
-		return detailClassName;
+	public String getEntityClassName() {
+		return entityClassName;
 	}
 	
-	private DetailType defaultDetail;
-	public DetailType getDefaultDetail() {
+	private EntityType defaultDetail;
+	public EntityType getDefaultDetail() {
 		return defaultDetail;
 	}
-	public void setDefaultDetail(DetailType defaultDetail) {
+	public void setDefaultDetail(EntityType defaultDetail) {
 		this.defaultDetail = defaultDetail;
 	}
 
 	@SuppressWarnings("unchecked")
-	protected DetailType onCreateNewDetail(){
+	protected EntityType createEntity(){
+		if(!StringUtils.isEmpty(getEntityClassName())) return (EntityType)createInstanceByName(getEntityClassName());
 		if(getDefaultDetail()!=null){
 			return getDefaultDetail();
 		}
-		return StringUtils.isEmpty(getDetailClassName())? null:(DetailType) createInstanceByName(getDetailClassName());
+		return onCreateEntity();
 	}
 
-	protected Map<String, List<? extends Code<KeyType>>> onGetNewCodes(UserProfile<KeyType> user) {
+	protected EntityType onCreateEntity() {
+		return null;
+	}
+
+	protected Map<String, List<? extends Code<?>>> onGetNewCodes(UserProfile user) {
 		return new HashMap<>();
 	}
 
-	protected Map<String, List<? extends Code<KeyType>>> onGetModifyCodes(UserProfile<KeyType> user, DetailType detail) {
+	protected Map<String, List<? extends Code<?>>> onGetModifyCodes(UserProfile user, EntityType detail) {
 		return new HashMap<>();
 	}
 
-	protected void onAfterSelectDetail(UserProfile<KeyType> user, String action, DetailType detail) {		
+	protected void onAfterSelectDetail(UserProfile user, String action, EntityType detail) {		
 	}
 
 	protected String onGetDetailPage(String action, KeyType selectedId, Model model) {
-		UserProfile<KeyType> user=getUserProfile();
-		DetailType detail=null;
-		Map<String, List<? extends Code<KeyType>>> codes;		
+		UserProfile user=getUser();
+		EntityType detail=null;
+		Map<String, List<? extends Code<?>>> codes;		
 		String pageName="";		
 		getLogger().trace("--------获取详细信息页，操作=["+ action	+ "] 记录ID=["+ selectedId + "]--------");
 		
 		switch(action){
 		case WebAction.NEW:
-			detail=onCreateNewDetail();
+			detail=createEntity();
 			getLogger().trace("-------record created ---------");
 			getLogger().trace(detail.toString());
 			//addDetailToModel(action, detail, model);
@@ -123,7 +126,7 @@ public abstract class AbstractDetailControllerBase<KeyType,	DetailType>
 			break;
 		case WebAction.MODIFY:
 			getLogger().trace("-------- modify action ---------------");
-			detail=getAppDetailService().selectById(selectedId);
+			detail=getService().selectById(selectedId);
 			getLogger().trace("-------- detail record selected by id=["+selectedId+"]-------");
 			getLogger().trace(detail.toString());
 			getLogger().trace("------ prepare new page codes -----");
@@ -133,23 +136,23 @@ public abstract class AbstractDetailControllerBase<KeyType,	DetailType>
 			pageName=getModifyPageName();
 			break;
 		case WebAction.CANCELATE:
-			detail=getAppDetailService().selectById(selectedId);
+			detail=getService().selectById(selectedId);
 			pageName=getCancelatePageName();
 			break;
 		case WebAction.DELETE:
-			detail=getAppDetailService().selectById(selectedId);
+			detail=getService().selectById(selectedId);
 			pageName=getDeletePageName();
 			break;
 		case WebAction.DISABLE:
-			detail=getAppDetailService().selectById(selectedId);
+			detail=getService().selectById(selectedId);
 			pageName=getDisablePageName();
 			break;
 		case WebAction.REACTIVE:
-			detail=getAppDetailService().selectById(selectedId);	
+			detail=getService().selectById(selectedId);	
 			pageName=getReactivePageName();
 			break;			
 		case WebAction.VIEW:
-			detail=getAppDetailService().selectById(selectedId);			
+			detail=getService().selectById(selectedId);			
 			if(getLogger().isTraceEnabled() && detail!=null){
 				getLogger().trace(detail.toString());
 			}
@@ -162,7 +165,7 @@ public abstract class AbstractDetailControllerBase<KeyType,	DetailType>
 		getLogger().trace(detail.toString());
 		onAfterSelectDetail(user, action, detail);
 		
-		addDetailToModel(action, detail, model);
+		addEntityToModel(action, detail, model);
 		getLogger().trace("------返回页面模板["+pageName+"] --------");
 		return pageName;
 	}
@@ -179,28 +182,28 @@ public abstract class AbstractDetailControllerBase<KeyType,	DetailType>
 		return PAGE_CANCELATE;
 	}
 
-	protected void onBeforSaveDetail(UserProfile<KeyType> user, String action, DetailType detail) throws Exception {
+	protected void onBeforSaveDetail(UserProfile user, String action, EntityType detail) throws Exception {
 		
 	}
-	protected void saveNew(DetailType detail){
-		getAppDetailService().insert(detail);
+	protected void saveNew(EntityType detail){
+		getService().insert(detail);
 	}
-	protected void saveModify(DetailType detail){
-		getAppDetailService().update(detail);
+	protected void saveModify(EntityType detail){
+		getService().update(detail);
 	}
-	protected void saveDelete(DetailType detail){
-		getAppDetailService().delete(detail);
+	protected void saveDelete(EntityType detail){
+		getService().delete(detail);
 	}
-	protected void saveCancelate(DetailType detail){		
+	protected void saveCancelate(EntityType detail){		
 	}
-	protected void saveReactive(DetailType detail){		
+	protected void saveReactive(EntityType detail){		
 	}
-	protected void saveDisable(DetailType detail){		
+	protected void saveDisable(EntityType detail){		
 	}
 	
 
-	protected String onPostDetailPage(String action, DetailType detail) {
-		UserProfile<KeyType> user =getUserProfile();
+	protected String onPostDetailPage(String action, EntityType detail) {
+		UserProfile user =getUser();
 		getLogger().trace("--------保存记录修改  操作["+action+"] -----");
 		getLogger().trace("--------页面记录---------------");
 		getLogger().trace(detail.toString());
@@ -249,10 +252,10 @@ public abstract class AbstractDetailControllerBase<KeyType,	DetailType>
 		return "OK";
 	}
 
-	protected void addDetailToModel(String action, DetailType detail, Model model) {
-		model.addAttribute(GeneralController.PARAM_NAME_ENTITY_NAME, getEntityName());
-		model.addAttribute(GeneralController.PARAM_NAME_ACTION, action);
-		model.addAttribute(GeneralController.PARAM_NAME_ACTION_NAME, WebAction.getActoinName(action)+getEntityName());
-		model.addAttribute(GeneralController.PARAM_NAME_DETAIL, detail);
+	protected void addEntityToModel(String action, EntityType detail, Model model) {
+		model.addAttribute(ControllerBase.PARAM_NAME_ENTITY_NAME, getEntityName());
+		model.addAttribute(ControllerBase.PARAM_NAME_ACTION, action);
+		model.addAttribute(ControllerBase.PARAM_NAME_ACTION_NAME, WebAction.getActoinName(action)+getEntityName());
+		model.addAttribute(ControllerBase.PARAM_NAME_DETAIL, detail);
 	}
 }

@@ -5,7 +5,7 @@ import java.util.Random;
 
 import org.springframework.util.StringUtils;
 
-public class DetaultCaptchaGenerator implements ICharCodeCaptchaGenerator {
+public class DetaultCaptchaGenerator implements CharCodeCaptchaGenerator {
 	private static final String DEFAULT_CHAR_SET="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	
 	private String captchaCharSet;

@@ -7,13 +7,32 @@ import java.util.Map;
 import org.springframework.ui.Model;
 
 import com.uc.web.forms.ui.IUIFormator;
+import com.uc.web.service.Service;
 
 public abstract class DashboardItemBase implements DashboardItem {
+	private DashboardItem parent;
+	private Service service;
 	private IUIFormator<? extends DashboardItem> formatter;
 	private String title;
 	private String name;
 	private String uiTemplate;
 	private List<? extends DashboardItem> subItems;
+	@Override
+	public DashboardItem getParent() {
+		return parent;
+	}
+	@Override
+	public void setParent(DashboardItem parent) {
+		this.parent = parent;
+	}
+	@Override
+	public Service getService() {
+		return service;
+	}
+	@Override
+	public void setService(Service service) {
+		this.service = service;
+	}
 	
 	@Override
 	public IUIFormator<? extends DashboardItem> getFormatter() {
@@ -76,8 +95,8 @@ public abstract class DashboardItemBase implements DashboardItem {
 		model.mergeAttributes(thisMap);
 	}
 	
-	protected abstract void doProcessGet(Model model);
-	protected abstract void doProcessPost(String jsonString, Model model);
+	protected void doProcessGet(Model model){}
+	protected void doProcessPost(String jsonString, Model model){}
 
 	@Override
 	public String doGet(Model model) {

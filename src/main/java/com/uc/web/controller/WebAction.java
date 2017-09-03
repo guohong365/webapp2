@@ -1,6 +1,6 @@
 package com.uc.web.controller;
 
-import com.uc.web.forms.IWebForm;
+import com.uc.web.forms.WebForm;
 
 public class WebAction {
 	public static final String NEW="new";
@@ -34,7 +34,7 @@ public class WebAction {
 			return "UNKNOWN";
 		}
 	}
-	public static final String getActionName(IWebForm<?,?> action){
+	public static final String getActionName(WebForm<?,?> action){
 		return getActoinName(action.getAction());
 	}
 

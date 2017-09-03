@@ -16,7 +16,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.uc.utils.LoggerSupportor;
 import com.uc.web.domain.security.IRoleFunctionDefine;
-import com.uc.web.service.SecurityService;
+import com.uc.web.service.SecurityServiceBase;
 
 public class AbstractSecurityMetadataSourceFactoryBean<KeyType> 
 	extends LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>> implements LoggerSupportor  {
@@ -29,13 +29,13 @@ public class AbstractSecurityMetadataSourceFactoryBean<KeyType>
 		logger=LoggerFactory.getLogger(getClass());
 	}
 
-	private SecurityService<KeyType> securityService;
+	private SecurityServiceBase<KeyType> securityService;
 	
-	public SecurityService<KeyType> getSecurityService() {
+	public SecurityServiceBase<KeyType> getSecurityService() {
 		return securityService;
 	}
 
-	public void setSecurityService(SecurityService<KeyType> securityService) {
+	public void setSecurityService(SecurityServiceBase<KeyType> securityService) {
 		this.securityService = securityService;
 	}
 	

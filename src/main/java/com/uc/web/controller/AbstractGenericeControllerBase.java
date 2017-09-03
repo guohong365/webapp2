@@ -11,18 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.ui.Model;
 
+import com.uc.utils.export.ExportOptions;
 import com.uc.utils.export.Exportor;
 import com.uc.utils.export.ExportorFactory;
 import com.uc.web.domain.Code;
 import com.uc.web.domain.security.UserProfile;
 import com.uc.web.forms.QueryForm;
-import com.uc.web.forms.WebListFormBase;
-import com.uc.web.forms.ui.componet.IPageCtrl;
-import com.uc.web.forms.ui.componet.PageCtrl;
+import com.uc.web.forms.WebListForm;
 import com.uc.web.service.AppService;
 
-public abstract class AbstractGenericeControllerBase<KeyType,	QueryFormType extends QueryForm<KeyType>,	DetailType> 
-	extends ControllerSupportImpl<KeyType> {
+public abstract class AbstractGenericeControllerBase<KeyType, QueryFormType extends QueryForm<KeyType>,	EntityType> 
+	extends ControllerBaseImpl {
 
 	protected static final String PAGE_LIST = "/list";
 	protected static final String PAGE_TABLE = "/table";
@@ -68,16 +67,11 @@ public abstract class AbstractGenericeControllerBase<KeyType,	QueryFormType exte
 
 	protected abstract String onGetEntityName();
 	
-	private AppService<KeyType,	QueryFormType,	DetailType> appService;
-	
-	protected AppService<KeyType,		QueryFormType,	DetailType> getAppService(){
-		return appService;
+	@SuppressWarnings("unchecked")
+	protected AppService<KeyType, QueryFormType, EntityType> getAppService(){
+		return (AppService<KeyType, QueryFormType, EntityType>) getService();
 	};
-	
-	public void setAppService(AppService<KeyType,	QueryFormType,	DetailType> appService){
-		this.appService=appService;
-	}
-	
+		
 	private ExportorFactory exportorFactory;
 		
 	public void setExportorFactory(ExportorFactory exportorFactory) {
@@ -88,25 +82,25 @@ public abstract class AbstractGenericeControllerBase<KeyType,	QueryFormType exte
 		return exportorFactory;
 	}
 	
-	private Object exportorOptions;
+	private ExportOptions exportorOptions;
 	
-	public void setExportorOptions(Object exportorOptions) {
+	public void setExportorOptions(ExportOptions exportorOptions) {
 		this.exportorOptions = exportorOptions;
 	}
 	
-	public Object getExportorOptions() {
+	public ExportOptions getExportorOptions() {
 		return exportorOptions;
 	}
 	
-	private void commonSetQueryForm(UserProfile<KeyType> user, QueryFormType queryForm) {
-		queryForm.setQueryUser(user);
+	private void commonSetQueryForm(UserProfile user, QueryFormType queryForm) {
+		queryForm.setUser(user);
 		onSetUserQueryLimits(queryForm);
 	}
 
-	private void logCodes(Map<String, List<? extends Code<KeyType>>> codes) {
+	private void logCodes(Map<String, List<? extends Code<?>>> codes) {
 		if(getLogger().isTraceEnabled() && codes!=null){
 			getLogger().trace("--------加载查询条件代码:" + codes.size() + "个...");
-			for(Entry<String, List<? extends Code<KeyType>>> entry: codes.entrySet()){
+			for(Entry<String, List<? extends Code<?>>> entry: codes.entrySet()){
 				if(entry!=null){
 					getLogger().trace("\t 代码: ["+entry.getKey()+"] " + entry.getValue());
 				}
@@ -120,26 +114,26 @@ public abstract class AbstractGenericeControllerBase<KeyType,	QueryFormType exte
 	protected void onSetUserQueryLimits(QueryFormType queryForm) {
 	}
 
-	protected QueryFormType onPrepareInitQueryForm(UserProfile<KeyType> user) {
+	protected QueryFormType onPrepareInitQueryForm(UserProfile user) {
 		QueryFormType queryForm= onCreateNewQueryForm();
 		commonSetQueryForm(user, queryForm);
 		return queryForm;
 	}
 
-	protected Map<String, List<? extends Code<KeyType>>> onGetListPageCodes(UserProfile<KeyType> user) {
+	protected Map<String, List<? extends Code<?>>> onGetListPageCodes(UserProfile user) {
 		return new HashMap<>();
 	}
 
-	protected void afterListSelected(WebListFormBase<KeyType, QueryFormType, DetailType> webForm) {
+	protected void afterListSelected(WebListForm<QueryFormType, EntityType> webForm) {
 	}
 
-	protected void onSetListModel(UserProfile<KeyType> user, Model model) {
+	protected void onSetListModel(UserProfile user, Model model) {
 	}
 
 	protected String onGetListPage(Model model) {		
-		UserProfile<KeyType> user=getUserProfile();
+		UserProfile user=getUser();
 		
-		WebListFormBase<KeyType, QueryFormType, DetailType> webForm=new WebListFormBase<>();
+		WebListForm<QueryFormType, EntityType> webForm=new WebListForm<>();
 		//准备无条件queryFrom		
 		getLogger().trace("---- 准备列表查询默认条件 --------");		
 		QueryFormType queryForm=onPrepareInitQueryForm(user);
@@ -159,7 +153,7 @@ public abstract class AbstractGenericeControllerBase<KeyType,	QueryFormType exte
 		getLogger().trace("-------加工修改列表结果完成---- ");
 		
 		getLogger().trace("-------准备列表页查询代码--------");
-		Map<String, List<? extends Code<KeyType>>> codes=onGetListPageCodes(user);
+		Map<String, List<? extends Code<?>>> codes=onGetListPageCodes(user);
 		logCodes(codes);
 		
 		if(codes!=null && !codes.isEmpty()){
@@ -175,22 +169,21 @@ public abstract class AbstractGenericeControllerBase<KeyType,	QueryFormType exte
 		return pageName;
 	}
 
-	protected void onBeforeSelectPagationList(UserProfile<KeyType> user, QueryFormType queryForm, IPageCtrl pageCtrl) {
+	protected void onBeforeSelectPagationList(UserProfile user, QueryFormType queryForm) {
 		commonSetQueryForm(user, queryForm);
 	}
 
-	protected String onPostTablePage(QueryFormType queryForm, PageCtrl pageCtrl, Model model) {
-		UserProfile<KeyType> user=getUserProfile();
+	protected String onPostTablePage(QueryFormType queryForm, Model model) {
+		UserProfile user=getUser();
 		getLogger().trace("-----输入条件-----");
 		getLogger().trace(queryForm.toString());
 		getLogger().trace("---------------");
-		WebListFormBase<KeyType, QueryFormType, DetailType> webForm=new WebListFormBase<>();
+		WebListForm<QueryFormType, EntityType> webForm=new WebListForm<>();
 		getLogger().trace("-----准备列表数据查询条件----");
-		onBeforeSelectPagationList(user, queryForm, pageCtrl);
+		onBeforeSelectPagationList(user, queryForm);
 		getLogger().trace(queryForm.toString());
 		getLogger().trace("----------------------");
 		webForm.setQuery(queryForm);
-		webForm.setPageCtrl(pageCtrl);
 		getLogger().trace("------查询数据----------");
 		getAppService().select(webForm);
 		getLogger().trace("------获得数据["+webForm.getData().size()+"]----");
@@ -206,17 +199,17 @@ public abstract class AbstractGenericeControllerBase<KeyType,	QueryFormType exte
 		return pageName;
 	}
 
-	protected void onBeforeSelectPostList(UserProfile<KeyType> user, QueryFormType queryForm) {
+	protected void onBeforeSelectPostList(UserProfile user, QueryFormType queryForm) {
 		commonSetQueryForm(user, queryForm);
 	}
 
 	protected String onPostListPage(QueryFormType queryForm, Model model) {
-		UserProfile<KeyType> user=getUserProfile();
+		UserProfile user=getUser();
 		getLogger().trace("-----输入条件-----");
 		getLogger().trace(queryForm.toString());
 		getLogger().trace("---------------");
 				
-		WebListFormBase<KeyType, QueryFormType, DetailType> webForm=new WebListFormBase<>();
+		WebListForm<QueryFormType, EntityType> webForm=new WebListForm<>();
 		getLogger().trace("-----准备查询条件-----");
 		onBeforeSelectPostList(user, queryForm);
 		getLogger().trace(queryForm.toString());
@@ -246,7 +239,7 @@ public abstract class AbstractGenericeControllerBase<KeyType,	QueryFormType exte
 		return "";
 	}
 
-	protected Exportor onGetExportor(QueryFormType queryForm, List<DetailType> data, String type) {
+	protected Exportor onGetExportor(QueryFormType queryForm, List<EntityType> data) {
 		if(getExportorFactory()!=null){
 			Map<String,Object> options=new HashMap<>();
 			options.put(GeneralController.EXPORTOR_OPTION_QUERY_FORM, queryForm);
@@ -257,22 +250,22 @@ public abstract class AbstractGenericeControllerBase<KeyType,	QueryFormType exte
 		return null;
 	}
 
-	protected void onBeforeSelectExportList(UserProfile<KeyType> user, QueryFormType queryForm) {
+	protected void onBeforeSelectExportList(UserProfile user, QueryFormType queryForm) {
 		commonSetQueryForm(user, queryForm);
 	}
 
-	protected void onAferExportListSelected(QueryFormType queryForm, List<DetailType> details) {		
+	protected void onAferExportListSelected(QueryFormType queryForm, List<EntityType> details) {		
 	}
 
-	protected void onExport(QueryFormType queryForm, HttpServletRequest request, HttpServletResponse response, String type) {
-		UserProfile<KeyType> user=getUserProfile();		
+	protected void onExport(QueryFormType queryForm, HttpServletRequest request, HttpServletResponse response) {
+		UserProfile user=getUser();		
 		
 		onBeforeSelectExportList(user, queryForm);		
-		List<DetailType> data=getAppService().selectForExport(queryForm);
+		List<EntityType> data=getAppService().selectForExport(queryForm);
 		
 		onAferExportListSelected(queryForm, data);
 		
-		Exportor exportor=onGetExportor(queryForm, data, type);
+		Exportor exportor=onGetExportor(queryForm, data);
 				
 		if(exportor!=null){
 			try {
@@ -290,23 +283,23 @@ public abstract class AbstractGenericeControllerBase<KeyType,	QueryFormType exte
 		
 	}
 
-	protected abstract DetailType onCreateNewDetail();
+	protected abstract EntityType onCreateNewDetail();
 
-	protected Map<String, List<? extends Code<KeyType>>> onGetNewCodes(UserProfile<KeyType> user) {
+	protected Map<String, List<? extends Code<?>>> onGetNewCodes(UserProfile user) {
 		return new HashMap<>();
 	}
 
-	protected Map<String, List<? extends Code<KeyType>>> onGetModifyCodes(UserProfile<KeyType> user, DetailType detail) {
+	protected Map<String, List<? extends Code<?>>> onGetModifyCodes(UserProfile user, EntityType detail) {
 		return new HashMap<>();
 	}
 
-	protected void onAfterSelectDetail(UserProfile<KeyType> user, String action, DetailType detail) {		
+	protected void onAfterSelectDetail(UserProfile user, String action, EntityType detail) {		
 	}
 
 	protected String onGetDetailPage(String action, KeyType selectedId, Model model) {
-		UserProfile<KeyType> user=getUserProfile();
-		DetailType detail=null;
-		Map<String, List<? extends Code<KeyType>>> codes;		
+		UserProfile user=getUser();
+		EntityType detail=null;
+		Map<String, List<? extends Code<?>>> codes;		
 		String pageName="";		
 		getLogger().debug("--------获取详细信息页，操作=["+ action	+ "] 记录ID=["+ selectedId + "]--------");
 		
@@ -384,28 +377,28 @@ public abstract class AbstractGenericeControllerBase<KeyType,	QueryFormType exte
 		return PAGE_CANCELATE;
 	}
 
-	protected void onBeforSaveDetail(UserProfile<KeyType> user, String action, DetailType detail) throws Exception {
+	protected void onBeforSaveDetail(UserProfile user, String action, EntityType detail) throws Exception {
 		
 	}
-	protected void saveNew(DetailType detail){
+	protected void saveNew(EntityType detail){
 		getAppService().insert(detail);
 	}
-	protected void saveModify(DetailType detail){
+	protected void saveModify(EntityType detail){
 		getAppService().update(detail);
 	}
-	protected void saveDelete(DetailType detail){
+	protected void saveDelete(EntityType detail){
 		getAppService().delete(detail);
 	}
-	protected void saveCancelate(DetailType detail){		
+	protected void saveCancelate(EntityType detail){		
 	}
-	protected void saveReactive(DetailType detail){		
+	protected void saveReactive(EntityType detail){		
 	}
-	protected void saveDisable(DetailType detail){		
+	protected void saveDisable(EntityType detail){		
 	}
 	
 
-	protected String onPostDetailPage(String action, DetailType detail) {
-		UserProfile<KeyType> user =getUserProfile();
+	protected String onPostDetailPage(String action, EntityType detail) {
+		UserProfile user =getUser();
 		getLogger().trace("--------保存记录修改  操作["+action+"] -----");
 		getLogger().trace("--------页面记录---------------");
 		getLogger().trace(detail.toString());
@@ -454,16 +447,15 @@ public abstract class AbstractGenericeControllerBase<KeyType,	QueryFormType exte
 		return "OK";
 	}
 
-	protected void addDetailToModel(String action, DetailType detail, Model model) {
+	protected void addDetailToModel(String action, EntityType detail, Model model) {
 		setAction(action, model);
 		setDetail(detail, model);		
 	}
 
-	protected void addWebListFromToModel(WebListFormBase<KeyType, QueryFormType, DetailType> webListFormBase, Model model) {
+	protected void addWebListFromToModel(WebListForm<QueryFormType, EntityType> webListFormBase, Model model) {
 		
 		model.addAttribute(GeneralController.PARAM_NAME_QUERY_INPUT, webListFormBase.getQuery());
 		model.addAttribute(GeneralController.PARAM_NAME_RECORDS, webListFormBase.getData());
-		model.addAttribute(GeneralController.PARAM_NAME_PAGE_CTRL,webListFormBase.getPageCtrl());
 	}
 
 	protected void setAction(String action, Model model) {
@@ -475,7 +467,7 @@ public abstract class AbstractGenericeControllerBase<KeyType,	QueryFormType exte
 		model.addAttribute(GeneralController.PARAM_NAME_DETAIL, detail);
 	}
 
-	protected Map<String, List<? extends Code<KeyType>>> onGetReactiveCodes(UserProfile<KeyType> user, DetailType detail) {
+	protected Map<String, List<? extends Code<?>>> onGetReactiveCodes(UserProfile user, EntityType detail) {
 		return new HashMap<>();
 	}
 
