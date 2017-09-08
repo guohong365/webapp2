@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.uc.utils.export.Exportor;
 import com.uc.web.forms.ListQueryForm;
-import com.uc.web.forms.WebListForm;
 import com.uc.web.forms.ui.componet.PageCtrl;
 
 public class AppWebListServiceBase<QueryFormType extends ListQueryForm, EntityType>
@@ -14,31 +13,23 @@ public class AppWebListServiceBase<QueryFormType extends ListQueryForm, EntityTy
 {
 
 	@Override
-	public void select(WebListForm<QueryFormType, EntityType> webForm) {
-		QueryFormType queryForm = webForm.getQuery();
-		PageCtrl pageCtrl = queryForm.getPageCtrl();
-
+	public List<EntityType> select(QueryFormType queryForm, PageCtrl pageCtrl) {		
 		Long count=null;
-		List<EntityType> list= null;
+		List<EntityType> list;
 		
 		count=selectCount(queryForm);		
-		if(count==null){
-			PageCtrl.initPageCtrl(queryForm.getPageCtrl(), 0);
-			webForm.setData(new ArrayList<>());
-			return;
+		if(count==null || count == 0){
+			PageCtrl.initPageCtrl(pageCtrl, 0);
+			return new ArrayList<>();
 		}
-		if(pageCtrl.getTotal() < 0){
+		if(pageCtrl.getOffset() < 0){
 			PageCtrl.initPageCtrl(pageCtrl, count);			
-		} else if(count == 0){
-			PageCtrl.initPageCtrl(pageCtrl, 0);			
 		} else {  //update total of pageCtrl
 			pageCtrl.setTotal(count);
-			
-		}
-		
-		list=select(queryForm, queryForm.getPageCtrl().getOffset(), queryForm.getPageCtrl().getPageSize());
+		}		
+		list=select(queryForm, pageCtrl.getOffset(), pageCtrl.getPageSize());
 		onAfterListSelected(list);
-		webForm.setData(list);
+		return list;
 	}
 
 	@Override

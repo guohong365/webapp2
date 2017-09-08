@@ -3,11 +3,9 @@ package com.uc.web.domain.basic;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.util.StringUtils;
-
 import com.uc.utils.BasicTreeNode;
-import com.uc.utils.TreeNode;
 import com.uc.utils.TreeImpl;
+import com.uc.utils.TreeNode;
 import com.uc.utils.filter.IFilter;
 import com.uc.web.domain.CodeTree;
 
@@ -84,7 +82,7 @@ public class BasicCodeTree<TreeCodeType extends BasicTreeCode> extends TreeImpl<
 		List<TreeCodeType> list=new ArrayList<>();
 		TreeNode<TreeCodeType> rootItem;
 		
-		rootItem=StringUtils.isEmpty(id)? getRoot() : findCode(id);
+		rootItem= id==null ? getRoot() : findCode(id);
 		if(rootItem==null || rootItem.getData()==null){ //not found
 				return list;
 		}
@@ -183,7 +181,7 @@ public class BasicCodeTree<TreeCodeType extends BasicTreeCode> extends TreeImpl<
 	
 	public List<BasicCode> getSubCodes(String rootCode, boolean includeRoot, boolean isAll, String excludedId){
 		List<BasicCode> list=new ArrayList<>();
-		TreeNode<TreeCodeType> root=StringUtils.isEmpty(rootCode)? getRoot() : findCode(rootCode);
+		TreeNode<TreeCodeType> root=rootCode==null ? getRoot() : findCode(rootCode);
 		if(root==null) return list;
 		
 		getSubCodes(root, includeRoot, isAll, excludedId, list);

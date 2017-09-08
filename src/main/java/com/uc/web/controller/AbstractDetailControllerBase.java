@@ -51,13 +51,13 @@ public class AbstractDetailControllerBase<KeyType,	EntityType>
 		return null;
 	}
 	
-	private void logCodes(
-			Map<String, List<? extends Code<?>>> codes) {
+	private void logCodes(Map<String, List<? extends Code<?>>> codes) {
 		if(getLogger().isTraceEnabled() && codes!=null){
 			getLogger().trace("--------加载查询条件代码:" + codes.size() + "个...");
 			for(Entry<String, List<? extends Code<?>>> entry: codes.entrySet()){
 				if(entry!=null){
-					getLogger().trace("\t 代码: ["+entry.getKey()+"] " + entry.getValue());
+					System.err.println("\t 代码: ["+entry.getKey()+"] ");
+					System.err.println(entry.getValue());
 				}
 			}
 			getLogger().trace("--------代码加载完成-----------");			

@@ -13,7 +13,7 @@ public class AndFilter<DataType> extends ChainFilter<DataType> implements IAndFi
 
 	@Override
 	public IAndFilter<DataType> and(IFilter<DataType> filter) {
-		add(filter);
+		if(filter!=null) add(filter);
 		return this;
 	}
 	

@@ -7,17 +7,11 @@ public class TreeImpl<TreeDataType> implements Tree<TreeDataType> {
 	rootNode=new BasicTreeNode<>();
 }
   
-  /* (non-Javadoc)
- * @see com.uc.utils.ITree#getRoot()
- */
 @Override
 public TreeNode<TreeDataType> getRoot(){
 	  return rootNode;
   }
   
-  /* (non-Javadoc)
- * @see com.uc.utils.ITree#addNode(com.uc.utils.ITreeNode, com.uc.utils.ITreeNode)
- */
 @Override
 public TreeNode<TreeDataType> addNode(TreeNode<TreeDataType> node, TreeNode<TreeDataType> parent){
 	  if(parent==null){
@@ -42,9 +36,6 @@ public TreeNode<TreeDataType> addNode(TreeNode<TreeDataType> node, TreeNode<Tree
   }
   
   
-  /* (non-Javadoc)
- * @see com.uc.utils.ITree#removeNode(com.uc.utils.ITreeNode)
- */
 @Override
 public TreeNode<TreeDataType> removeNode(TreeNode<TreeDataType> node){
 	  if(node.getParent()!=null){
@@ -54,5 +45,10 @@ public TreeNode<TreeDataType> removeNode(TreeNode<TreeDataType> node){
 	  }
 	  return null;
   }
+
+@Override
+public boolean isRoot(TreeNode<TreeDataType> node) {
+	return node.getParent() == null;
+}
   
 }

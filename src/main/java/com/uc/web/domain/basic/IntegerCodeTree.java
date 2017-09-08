@@ -3,11 +3,9 @@ package com.uc.web.domain.basic;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.util.StringUtils;
-
 import com.uc.utils.BasicTreeNode;
-import com.uc.utils.TreeNode;
 import com.uc.utils.TreeImpl;
+import com.uc.utils.TreeNode;
 import com.uc.utils.filter.IFilter;
 import com.uc.web.domain.CodeTree;
 
@@ -21,7 +19,7 @@ public class IntegerCodeTree<TreeCodeType extends IntegerTreeCode> extends TreeI
 	
 	public void getList(List<TreeCodeType> list, TreeNode<TreeCodeType> from, IFilter<TreeCodeType> filter){
 		if(from==null) return;
-		if(filter.filter(from.getData()))
+		if(from.getData()!=null &&(filter==null || filter.filter(from.getData())))
 			list.add(from.getData());
 		for(TreeNode<TreeCodeType> item:from.getChildren()){
 			getList(list, item, filter);
@@ -33,7 +31,7 @@ public class IntegerCodeTree<TreeCodeType extends IntegerTreeCode> extends TreeI
 		List<TreeCodeType> list=new ArrayList<>();
 		TreeNode<TreeCodeType> from=findCode(getRoot(), rootCode);
 		if(from!=null){
-			if(includeRoot) list.add(from.getData());
+			if(includeRoot && from.getData()!=null) list.add(from.getData());
 			if(depth>0){
 				for(TreeNode<TreeCodeType> next: from.getChildren()){
 					getSubItemToList(next, list, depth-1);				
@@ -84,7 +82,7 @@ public class IntegerCodeTree<TreeCodeType extends IntegerTreeCode> extends TreeI
 		List<TreeCodeType> list=new ArrayList<>();
 		TreeNode<TreeCodeType> rootItem;
 		
-		rootItem=StringUtils.isEmpty(id)? getRoot() : findCode(id);
+		rootItem = id==null ? getRoot() : findCode(id);
 		if(rootItem==null || rootItem.getData()==null){ //not found
 				return list;
 		}
@@ -183,7 +181,7 @@ public class IntegerCodeTree<TreeCodeType extends IntegerTreeCode> extends TreeI
 	
 	public List<IntegerCode> getSubCodes(Long rootCode, boolean includeRoot, boolean isAll, Long excludedId){
 		List<IntegerCode> list=new ArrayList<>();
-		TreeNode<TreeCodeType> root=StringUtils.isEmpty(rootCode)? getRoot() : findCode(rootCode);
+		TreeNode<TreeCodeType> root=rootCode==null? getRoot() : findCode(rootCode);
 		if(root==null) return list;
 		
 		getSubCodes(root, includeRoot, isAll, excludedId, list);

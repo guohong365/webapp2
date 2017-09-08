@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.uc.web.forms.ListQueryForm;
+import com.uc.web.forms.ui.componet.PageCtrlImpl;
 
 public abstract class AbstractListControllerProxy<QueryFormType extends ListQueryForm>
 	extends ControllerProxyBaseImpl
@@ -24,7 +25,7 @@ public abstract class AbstractListControllerProxy<QueryFormType extends ListQuer
 	@Override
 	public ExportController<QueryFormType> getExportController(){
 		if(getController() instanceof ExportController){
-			return (ExportController<QueryFormType>) getController();
+			return (ExportController<QueryFormType>) super.getController();
 		}
 		return null;
 	}
@@ -40,8 +41,10 @@ public abstract class AbstractListControllerProxy<QueryFormType extends ListQuer
 	public String postTablePage(
 			@ModelAttribute(PARAM_NAME_QUERY_INPUT)
 			QueryFormType queryInput,
+			@ModelAttribute(PARAM_NAME_PAGE_CTRL)
+			PageCtrlImpl pageCtrl,
 			Model model) {
-		return getController().postTablePage(queryInput, model);
+		return getController().postTablePage(queryInput, pageCtrl, model);
 	}
 
 	@Override

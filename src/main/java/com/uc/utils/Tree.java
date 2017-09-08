@@ -7,5 +7,7 @@ public interface Tree<TreeDataType> {
 	TreeNode<TreeDataType> addNode(TreeNode<TreeDataType> node, TreeNode<TreeDataType> parent);
 
 	TreeNode<TreeDataType> removeNode(TreeNode<TreeDataType> node);
+	
+	boolean isRoot(TreeNode<TreeDataType> node);
 
 }

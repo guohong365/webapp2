@@ -5,23 +5,18 @@ import java.util.Map;
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.util.StringUtils;
 
+import com.uc.web.domain.EntityBase;
 import com.uc.web.domain.security.UserProfile;
-import com.uc.web.forms.ui.componet.PageCtrl;
-import com.uc.web.forms.ui.componet.PageCtrlImpl;
 
-public class ListQueryFormBase implements ListQueryForm{
-	
-	private PageCtrl pageCtrl = new PageCtrlImpl();
+public class ListQueryFormBase extends EntityBase implements ListQueryForm{
+
 	private Map<String, String> columnMap = new HashedMap<>();
 	private UserProfile user;
 	private Boolean queryAll;	
 	private String queryOrder;
 	private String queryOrderBy;	
 	private String queryOrderByClause;
-	@Override
-	public PageCtrl getPageCtrl() {
-		return pageCtrl;
-	}
+	
 	
 	@Override
 	public Map<String, String> getColumnMap() {

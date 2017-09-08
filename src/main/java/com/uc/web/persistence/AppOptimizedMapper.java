@@ -4,12 +4,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-public interface AppOptimizedMapper<QueryFormType, DetailType> extends Mapper {
+public interface AppOptimizedMapper<QueryFormType, EntityType> extends Mapper {
 	Long selectCountOptimized(
 			@Param("queryForm")
 			QueryFormType qureForm
 			);
-	List<DetailType> selectOptimized(
+	List<EntityType> selectOptimized(
 			@Param("queryForm")
 			QueryFormType queryForm,
 			@Param("offset")

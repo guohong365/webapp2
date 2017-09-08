@@ -3,6 +3,7 @@ package com.uc.web.controller;
 import org.springframework.ui.Model;
 
 import com.uc.web.forms.DetailListQueryForm;
+import com.uc.web.forms.ui.componet.PageCtrlImpl;
 
 public abstract class AbstractDetailListController<
 	KeyType, 
@@ -35,8 +36,8 @@ public abstract class AbstractDetailListController<
 	}
 	
 	@Override
-	public String postTablePage(DetailQueryFormType queryInput, Model model) {
-		return getListController().postTablePage(queryInput, model);
+	public String postTablePage(DetailQueryFormType queryInput, PageCtrlImpl pageCtrl, Model model) {
+		return getListController().postTablePage(queryInput, pageCtrl, model);
 	}
 	
 	@Override

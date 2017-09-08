@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.uc.web.forms.DetailListQueryForm;
+import com.uc.web.forms.ui.componet.PageCtrlImpl;
 
 public abstract class AbstractDetailListControllerProxy<KeyType, EntityType, DetailQueryFormType extends DetailListQueryForm<KeyType>, DetailListType> 
 	extends AbstractDetailControllerProxy<KeyType, EntityType> 
@@ -18,8 +19,10 @@ public abstract class AbstractDetailListControllerProxy<KeyType, EntityType, Det
 	public String postTablePage(
 			@ModelAttribute(PARAM_NAME_QUERY_INPUT)
 			DetailQueryFormType queryInput,
+			@ModelAttribute(PARAM_NAME_PAGE_CTRL)
+			PageCtrlImpl pageCtrl,
 			Model model) {
-		return getController().postTablePage(queryInput, model);
+		return getController().postTablePage(queryInput, pageCtrl, model);
 	}
 
 	@Override

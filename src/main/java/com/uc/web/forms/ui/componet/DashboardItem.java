@@ -23,8 +23,10 @@ public interface DashboardItem {
 	void setName(String name);
 	List<? extends DashboardItem> getSubItems();
 	void setSubItems(List<? extends DashboardItem> items);
+	
 	String getUiTemplate();
 	void setUiTemplate(String uiTemplate);
+	
 	String doGet(Model model);
 	String doPost(String jsonParam, Model model);
 		

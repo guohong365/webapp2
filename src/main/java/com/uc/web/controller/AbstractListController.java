@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.ui.Model;
 
 import com.uc.web.forms.ListQueryForm;
+import com.uc.web.forms.ui.componet.PageCtrlImpl;
 
 public abstract class AbstractListController<QueryFormType extends ListQueryForm, EntityType>
 	extends AbstractListControllerBase<QueryFormType, EntityType>
@@ -22,8 +23,8 @@ public abstract class AbstractListController<QueryFormType extends ListQueryForm
 	}
 
 	@Override
-	public String postTablePage(QueryFormType queryInput, Model model) {
-		return onPostTablePage(queryInput, model);
+	public String postTablePage(QueryFormType queryInput,PageCtrlImpl pageCtrl, Model model) {
+		return onPostTablePage(queryInput, pageCtrl, model);
 	}
 
 	@Override

@@ -18,7 +18,8 @@ import com.uc.utils.export.ExportorFactory;
 import com.uc.web.domain.Code;
 import com.uc.web.domain.security.UserProfile;
 import com.uc.web.forms.ListQueryForm;
-import com.uc.web.forms.WebListForm;
+import com.uc.web.forms.ui.componet.PageCtrl;
+import com.uc.web.forms.ui.componet.PageCtrlImpl;
 import com.uc.web.service.AppWebListService;
 
 public abstract class AbstractListControllerBase<QueryFormType extends ListQueryForm, EntityType> 
@@ -67,7 +68,7 @@ public abstract class AbstractListControllerBase<QueryFormType extends ListQuery
 		onSetUserQueryLimits(queryForm);
 	}
 
-	private void logCodes(Map<String, List<? extends Code<?>>> codes) {
+	protected void logCodes(Map<String, List<? extends Code<?>>> codes) {
 		if(getLogger().isTraceEnabled() && codes!=null){
 			getLogger().trace("--------加载查询条件代码:" + codes.size() + "个...");
 			for(Entry<String, List<? extends Code<?>>> entry: codes.entrySet()){
@@ -121,67 +122,71 @@ public abstract class AbstractListControllerBase<QueryFormType extends ListQuery
 		return new HashMap<>();
 	}
 
-	protected void afterListSelected(WebListForm<QueryFormType, EntityType> webForm) {
+	protected void afterListSelected(List<EntityType> list) {
 	}
 
 	protected void onSetListModel(UserProfile user, Model model) {
 	}
 
 	protected String onGetListPage(Model model) {		
-		UserProfile user=getUser();
-		
-		WebListForm<QueryFormType, EntityType> webForm=new WebListForm<>();
+		UserProfile user=getUser();		
 		//准备无条件queryFrom		
 		getLogger().trace("---- 准备列表查询默认条件 --------");		
 		QueryFormType queryForm=onPrepareInitQueryForm(user);
+		PageCtrl pageCtrl=new PageCtrlImpl();
+		
 		getLogger().trace("---- 默认条件  -------");		
 		getLogger().trace(queryForm.toString());
-		getLogger().trace("------------------");		
-		webForm.setQuery(queryForm);		
+		
 		getLogger().trace("-------查询数据-------");
-		getService().select(webForm);
-		getLogger().trace("------获得数据["+webForm.getData().size()+"]------" );
-		addWebListFormToModel(webForm, model);		
+		List<EntityType> list=getService().select(queryForm, pageCtrl);
+		
 		getLogger().trace("------ 加工修改列表结果--------");
-		afterListSelected(webForm);
+		afterListSelected(list);
+		
+		getLogger().trace("-------添加结果-----");
+		addFormToModel(queryForm, list, pageCtrl, model);
+		
 		getLogger().trace("-------准备列表页查询代码--------");
 		Map<String, List<? extends Code<?>>> codes=onGetListPageCodes(user);
-		logCodes(codes);
 		if(codes!=null && !codes.isEmpty()){
 			model.addAllAttributes(codes);
 		}		
 		getLogger().trace("------向model添加附加信息--------");
 		onSetListModel(user, model);
-		getLogger().trace("------附加信息添加完成--------");
+		
 		String pageName=getListPageName();
 		getLogger().trace("------返回页面模板["+pageName+"]------"  );
 		return pageName;
 	}
 
-	protected void onBeforeSelectPagationList(UserProfile user, QueryFormType queryForm) {
+	protected void onBeforeSelectPagationList(UserProfile user, QueryFormType queryForm, PageCtrl pageCtrl) {
 		commonSetQueryForm(user, queryForm);
 	}
 
-	protected String onPostTablePage(QueryFormType queryForm, Model model) {
+	protected String onPostTablePage(QueryFormType queryForm, PageCtrlImpl pageCtrl, Model model) {
 		UserProfile user=getUser();
 		getLogger().trace("-----输入条件-----");
-		getLogger().trace(queryForm.toString());
-		getLogger().trace("---------------");
-		WebListForm<QueryFormType, EntityType> webForm=new WebListForm<>();
-		getLogger().trace("-----准备列表数据查询条件----");
-		onBeforeSelectPagationList(user, queryForm);
-		getLogger().trace(queryForm.toString());
+		System.err.println(queryForm.toString());
+				
+		getLogger().trace("-----准备列表数据查询条件----");		
+		onBeforeSelectPagationList(user, queryForm, pageCtrl);
+		System.err.println(queryForm.toString());
 		getLogger().trace("----------------------");
-		webForm.setQuery(queryForm);
+
 		getLogger().trace("------查询数据----------");
-		getService().select(webForm);
-		getLogger().trace("------获得数据["+webForm.getData().size()+"]----");
+		List<EntityType> list=getService().select(queryForm, pageCtrl);
+		getLogger().trace("------获得数据["+ list.size()+"]----");
+		
 		getLogger().trace("------ 加工修改列表结果--------");
-		afterListSelected(webForm);
+		afterListSelected(list);
+		
 		getLogger().trace("-------加工修改列表结果完成---- ");		
-		addWebListFormToModel(webForm, model);		
+		addFormToModel(queryForm, list, pageCtrl, model);
+		
 		getLogger().trace("------添加类表附加信息--------");
 		onSetListModel(user, model);
+		
 		getLogger().trace("------附加信息添加完成--------");
 		String pageName=getTablePageName();
 		getLogger().trace("------返回页面模板["+pageName+"]------");
@@ -194,25 +199,26 @@ public abstract class AbstractListControllerBase<QueryFormType extends ListQuery
 
 	protected String onPostListPage(QueryFormType queryForm, Model model) {
 		UserProfile user=getUser();
+		PageCtrl pageCtrl=new PageCtrlImpl();
+		
 		getLogger().trace("-----输入条件-----");
 		getLogger().trace(queryForm.toString());
 		getLogger().trace("---------------");
 				
-		WebListForm<QueryFormType, EntityType> webForm=new WebListForm<>();
 		getLogger().trace("-----准备查询条件-----");
 		onBeforeSelectPostList(user, queryForm);
 		getLogger().trace(queryForm.toString());
-		getLogger().trace("------------------");
-		webForm.setQuery(queryForm);		
+		getLogger().trace("------------------");		
+		
 		getLogger().trace("------查询数据----------");
-		getService().select(webForm);
-		getLogger().trace("------获得数据[%d]----", webForm.getData().size());
+		List<EntityType> list=getService().select(queryForm, pageCtrl);		
+		getLogger().trace("------获得数据[%d]----", list.size());
 		
 		getLogger().trace("------ 加工修改列表结果--------");
-		afterListSelected(webForm);
-		getLogger().trace("-------加工修改列表结果完成---- ");		
+		afterListSelected(list);
 		
-		addWebListFormToModel(webForm, model);
+		getLogger().trace("-------加工修改列表结果完成---- ");
+		addFormToModel(queryForm, list, pageCtrl, model);
 		
 		getLogger().trace("------添加类表附加信息--------");
 		onSetListModel(user, model);
@@ -271,8 +277,14 @@ public abstract class AbstractListControllerBase<QueryFormType extends ListQuery
 		}		
 	}
 
-	protected void addWebListFormToModel(WebListForm<QueryFormType, EntityType> webListFormBase, Model model) {
-		model.addAttribute(PARAM_NAME_QUERY_INPUT, webListFormBase.getQuery());
-		model.addAttribute(PARAM_NAME_RECORDS, webListFormBase.getData());
+	protected void addFormToModel(QueryFormType queryForm, List<EntityType> list, PageCtrl pageCtrl, Model model) {
+		model.addAttribute(PARAM_NAME_QUERY_INPUT, queryForm);
+		getLogger().trace("queryForm push back:");
+		getLogger().trace(queryForm.toString());
+		model.addAttribute(PARAM_NAME_PAGE_CTRL, pageCtrl);
+		getLogger().trace("pageCtrl :");
+		getLogger().trace(pageCtrl.toString());
+		model.addAttribute(PARAM_NAME_RECORDS, list);
+		getLogger().trace("Data count:" + list.size());
 	}
 }
