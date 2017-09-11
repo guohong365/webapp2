@@ -10,12 +10,23 @@ import com.uc.web.domain.Menu;
 import com.uc.web.domain.IMenuTree;
 import com.uc.web.domain.Orgnization;
 import com.uc.web.domain.Role;
+import com.uc.web.domain.Settings;
 
 public abstract class AbstractUserProfile<KeyType>
 	extends AbstractUserRoles<KeyType>
 	implements UserProfileBase<KeyType> {
 	
 	private Orgnization<KeyType> orgnization;
+	private Settings settings;
+	
+	@Override
+	public Settings getSettings() {
+		return settings;
+	}
+	@Override
+	public void setSettings(Settings settings) {
+		this.settings = settings;
+	}
 	
 	@Override
 	public String getPassword() {

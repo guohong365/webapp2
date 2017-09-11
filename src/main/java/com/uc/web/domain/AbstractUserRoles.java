@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public abstract class AbstractUserRoles<KeyType> implements UserRole<KeyType> {
+public abstract class AbstractUserRoles<KeyType> extends EntityBase implements UserRole<KeyType> {
 	@Override
 	public List<Role<KeyType>> getRoles() {		
 		return roles;

@@ -8,10 +8,10 @@ import java.lang.reflect.Modifier;
 public class ObjectPropertyFormator {
 	
 	public static String format(Object object){
-		return format(object, "", false, true, true);
+		return format(object, "", false, true, true, false);
 	}
 	
-	public static String format(Object object,String prefix,boolean flat, boolean withClassName, boolean singleLinePerValue){
+	public static String format(Object object,String prefix,boolean flat, boolean withClassName, boolean singleLinePerValue, boolean justThisClass){
 		StringBuilder builder=new StringBuilder();
 		if(object==null){
 			return "null";			
@@ -20,6 +20,7 @@ public class ObjectPropertyFormator {
 		Class<?> c=object.getClass();
 		do{
 			format(object, c, builder,tab, flat, withClassName, singleLinePerValue);
+			if(justThisClass) break;
 			c=c.getSuperclass();
 			if(!flat){
 				tab +="\t";

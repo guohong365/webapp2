@@ -11,7 +11,7 @@ public class SystemConfigListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 		String configFileName=sce.getServletContext().getInitParameter(SYSTEM_CONFIG_FILE_PARAM_NAME);
 		if(!StringUtils.isEmpty(configFileName)){
-			SystemConfig.load(configFileName);
+			SystemConfig.getInstance().load(configFileName);
 		}
 	}
 
