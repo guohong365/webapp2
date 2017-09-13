@@ -9,7 +9,6 @@ import com.uc.web.persistence.AppListMapper;
 import com.uc.web.persistence.AppOptimizedMapper;
 import com.uc.web.persistence.Example;
 import com.uc.web.persistence.ExampleImpl;
-import com.uc.web.persistence.Mapper;
 
 public class AppListServiceBase<QueryFormType extends ListQueryForm, EntityType>
 	extends ServiceBase
@@ -24,14 +23,6 @@ public class AppListServiceBase<QueryFormType extends ListQueryForm, EntityType>
 	public void setDefaultOrderByClause(String defaultOrderByClause) {
 		this.defaultOrderByClause = defaultOrderByClause;
 	}
-	
-	@Override
-	public Mapper getMapper() {
-		if(getParent()!=null && getParent().getMapper()!=null)
-			return getParent().getMapper();
-		return super.getMapper();
-	}
-	
 	
 	@SuppressWarnings("unchecked")
 	public AppListMapper<EntityType> getListMapper(){

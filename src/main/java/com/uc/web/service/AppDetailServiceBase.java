@@ -5,17 +5,10 @@ import com.uc.web.persistence.AppInsertMapper;
 import com.uc.web.persistence.AppSelectByKeyMapper;
 import com.uc.web.persistence.AppUpdateMapper;
 import com.uc.web.persistence.AppUuidMapper;
-import com.uc.web.persistence.Mapper;
 
 public class AppDetailServiceBase<DetailKeyType, DetailType extends Object> 
 	extends ServiceBase 
 	implements AppDetailService<DetailKeyType, DetailType> {
-	
-	public Mapper getMapper(){
-		if(getParent()!=null && getParent().getMapper()!=null)
-			return getParent().getMapper();
-		return super.getMapper();
-	}
 	
 	@SuppressWarnings("unchecked")
 	public AppInsertMapper<DetailType> getInsertMapper(){

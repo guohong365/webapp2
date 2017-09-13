@@ -138,7 +138,8 @@ public abstract class AbstractListControllerBase<QueryFormType extends ListQuery
 		getLogger().trace("---- 默认条件  -------");		
 		getLogger().trace(queryForm.toString());
 		
-		getLogger().trace("-------查询数据-------");
+		getLogger().trace("-------查询数据-------");		
+		onBeforeSelect(user, queryForm);
 		List<EntityType> list=getService().select(queryForm, pageCtrl);
 		
 		getLogger().trace("------ 加工修改列表结果--------");
@@ -160,6 +161,9 @@ public abstract class AbstractListControllerBase<QueryFormType extends ListQuery
 		return pageName;
 	}
 
+	protected void onBeforeSelect(UserProfile user, QueryFormType queryForm) {
+	}
+
 	protected void onBeforeSelectPagationList(UserProfile user, QueryFormType queryForm, PageCtrl pageCtrl) {
 		commonSetQueryForm(user, queryForm);
 	}
@@ -175,6 +179,7 @@ public abstract class AbstractListControllerBase<QueryFormType extends ListQuery
 		getLogger().trace("----------------------");
 
 		getLogger().trace("------查询数据----------");
+		onBeforeSelect(user, queryForm);
 		List<EntityType> list=getService().select(queryForm, pageCtrl);
 		getLogger().trace("------获得数据["+ list.size()+"]----");
 		
@@ -257,7 +262,7 @@ public abstract class AbstractListControllerBase<QueryFormType extends ListQuery
 
 	protected void onExport(QueryFormType queryForm, HttpServletRequest request, HttpServletResponse response) {
 		UserProfile user=getUser();		
-		
+		onBeforeSelect(user, queryForm);
 		onBeforeSelectExportList(user, queryForm);		
 		List<EntityType> data=getService().selectForExport(queryForm);		
 		onAferExportListSelected(queryForm, data);		
