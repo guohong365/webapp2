@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public abstract class AbstractRoleFunctions<KeyType> implements RoleFunctions<KeyType> {
+public abstract class AbstractRoleFunctions implements RoleFunctions {
 	@Override
-	public void addFunction(Function<KeyType> func) {
+	public void addFunction(Function func) {
 		functions.add(func);
 	}
 	@Override
-	public void addFunction(Collection<? extends Function<KeyType>> functions) {
+	public void addFunction(Collection<? extends Function> functions) {
 		this.functions.addAll(functions);
 	}
 	@Override
-	public void removeFunction(Function<KeyType> func) {
+	public void removeFunction(Function func) {
 		this.functions.remove(func);
 	}
 	@Override
@@ -22,8 +22,8 @@ public abstract class AbstractRoleFunctions<KeyType> implements RoleFunctions<Ke
 		this.functions.clear();
 	}
 	@Override
-	public Function<KeyType> findFunction(KeyType key) {
-		for (Function<KeyType> iFunction : functions) {
+	public Function findFunction(Object key) {
+		for (Function iFunction : functions) {
 			if(iFunction.getId().equals(key)){
 				return iFunction;
 			}
@@ -31,16 +31,16 @@ public abstract class AbstractRoleFunctions<KeyType> implements RoleFunctions<Ke
 		return null;
 	}
 	
-	private Role<KeyType> role;
-	private List<Function<KeyType>> functions=new ArrayList<>();
+	private Role role;
+	private List<Function> functions=new ArrayList<>();
 	
-	public Role<KeyType> getRole() {
+	public Role getRole() {
 		return role;
 	}
-	public void setRole(Role<KeyType> role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
-	public List<Function<KeyType>> getFunctions() {
+	public List<Function> getFunctions() {
 		return functions;
 	}
 

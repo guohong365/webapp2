@@ -1,7 +1,6 @@
 package com.uc.web.domain;
 
-public abstract class AbstractMenu<KeyType> extends AbstractNamedObject<KeyType> implements Menu<KeyType> {
-	private KeyType parent;
+public abstract class AbstractMenu extends AbstractTreeNamedObject implements Menu {
 	private int order;
 	private String uri;
 
@@ -12,14 +11,6 @@ public abstract class AbstractMenu<KeyType> extends AbstractNamedObject<KeyType>
 	@Override
 	public void setOrder(Integer menuOrder) {
 		this.order = menuOrder;
-	}
-	@Override
-	public KeyType getParent() {
-		return parent;
-	}
-	@Override
-	public void setParent(KeyType parentId) {
-		this.parent = parentId;
 	}
 	public String getUri() {
 		return uri;

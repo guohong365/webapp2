@@ -1,27 +1,27 @@
 package com.uc.web.domain;
 
-public abstract class AbstractUserOrgnization<KeyType> implements UserOrgnizaiton<KeyType> {
-	private User<KeyType> user;
-	private Orgnization<KeyType> orgnization;
+public abstract class AbstractUserOrgnization implements UserOrgnizaiton {
+	private User user;
+	private Orgnization orgnization;
 	
 	@Override
-	public User<KeyType> getUser() {
+	public User getUser() {
 		return user;
 	}
 
 	@Override
-	public void setUser(User<KeyType> user) {
+	public void setUser(User user) {
 		this.user=user;
 		
 	}
 
 	@Override
-	public Orgnization<KeyType> getOrgnization() {
+	public Orgnization getOrgnization() {
 		return orgnization;
 	}
 
 	@Override
-	public void setOrgnization(Orgnization<KeyType> org) {
+	public void setOrgnization(Orgnization org) {
 		this.orgnization=org;
 		
 	}

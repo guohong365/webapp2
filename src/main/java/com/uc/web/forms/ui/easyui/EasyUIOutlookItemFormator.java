@@ -9,7 +9,7 @@ public class EasyUIOutlookItemFormator extends AbstractUIFormatorBase implements
 	private static final String format="<li><div><a href=\"javascript:void(0)\" data-rel=\"%s\" <span class=\"icon %s\" &nbsp;</span><span class=\"nav\">%s</span></a></div></li>";
 	@Override
 	public void formatHTML(TreeViewNode componet, StringBuilder builder){
-			MenuTreeItem<?> item=(MenuTreeItem<?>) ((TreeViewNode)componet).getTag();
+			MenuTreeItem item=(MenuTreeItem) ((TreeViewNode)componet).getTag();
 			builder.append(String.format(format, item.getUri(), item.getIcon(), item.getName()));
 	}
 

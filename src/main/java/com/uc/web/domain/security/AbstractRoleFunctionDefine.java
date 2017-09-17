@@ -3,30 +3,30 @@ package com.uc.web.domain.security;
 import com.uc.web.domain.Function;
 import com.uc.web.domain.Role;
 
-public abstract class AbstractRoleFunctionDefine<KeyType> 
-	implements IRoleFunctionDefine<KeyType> {
+public abstract class AbstractRoleFunctionDefine 
+	implements RoleFunctionDefine {
 	
-	private Role<KeyType> role;
-	private Function<KeyType> function;
+	private Role role;
+	private Function function;
 
 	@Override
-	public Role<KeyType> getRole() {
+	public Role getRole() {
 		return role;
 	}
 
 	@Override
-	public void setRole(Role<KeyType> role) {
+	public void setRole(Role role) {
 		this.role=role;
 		
 	}
 
 	@Override
-	public Function<KeyType> getFunction() {
+	public Function getFunction() {
 		return function;
 	}
 
 	@Override
-	public void setFunction(Function<KeyType> func) {
+	public void setFunction(Function func) {
 		this.function=func;
 		
 	}

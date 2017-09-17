@@ -1,9 +1,9 @@
 package com.uc.web.forms.app.system;
 
-import com.uc.web.forms.QueryFormImpl;
+import com.uc.web.forms.ListQueryFormImpl;
 
-public abstract class AbstractFunctionQureyForm<KeyType> 
-	extends QueryFormImpl<KeyType> {
+public abstract class AbstractFunctionQureyForm
+	extends ListQueryFormImpl {
 	
 	public String getQueryName() {
 		return queryName;

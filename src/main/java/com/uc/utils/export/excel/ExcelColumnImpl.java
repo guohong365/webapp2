@@ -1,11 +1,16 @@
 package com.uc.utils.export.excel;
 
-import com.uc.web.forms.Column;
-import com.uc.web.forms.ColumnBase;
+import java.util.Arrays;
+import java.util.Collection;
 
-public class ExcelColumnImpl extends ColumnBase implements ExcelColumn {
+import com.uc.web.forms.ComplexColumn;
+import com.uc.web.forms.ComplexColumnImpl;
+import com.uc.web.forms.SimpleColumn;
+
+public class ExcelColumnImpl extends ComplexColumnImpl implements ExcelColumn {
+	
 	private int widthAdjust;
-
+	
 	public boolean hasChildren() {
 		return getSubColumns() != null && getSubColumns().size() > 0;
 	}
@@ -14,7 +19,7 @@ public class ExcelColumnImpl extends ColumnBase implements ExcelColumn {
 	public void setWidthAdjust(int addWidth) {
 		if (hasChildren()) {
 			int every = addWidth / getSubColumns().size() + 1;
-			for (Column column : getSubColumns()) {
+			for (ComplexColumn column : getSubColumns()) {
 				((ExcelColumnImpl) column).setWidthAdjust(every);
 			}
 		} else {
@@ -26,16 +31,6 @@ public class ExcelColumnImpl extends ColumnBase implements ExcelColumn {
 		return widthAdjust;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Column:").append("\n").append("\t").append("title=").append(getTitle()).append("\n")
-				.append("\t").append("subColumns=").append(getSubColumns().size()).append("\n").append("\t")
-				.append("parent=").append(getParent()).append("\n").append("\t").append("colSpan=").append(getColSpan())
-				.append("\n").append("\t").append("rowSpan=").append(getRowSpan()).append("\n");
-		return builder.toString();
-	}
-
 	public ExcelColumnImpl() {
 		this("");		
 	}
@@ -45,7 +40,28 @@ public class ExcelColumnImpl extends ColumnBase implements ExcelColumn {
 	}
 
 	public ExcelColumnImpl(String title, int colSpan, int rowSpan) {
-		super(0, title, colSpan, rowSpan, true, false);
+		super(title, true, -1, colSpan, rowSpan);		
+	}
+	
+	public ExcelColumnImpl(String string, Collection<ExcelColumn> subCloumns){
+		this(string);
+		if(subCloumns!=null){
+		    getSubColumns().addAll(subCloumns);
+		}
+	}
+	public ExcelColumnImpl(String string, ExcelColumn[] subCloumns){
+		this(string, subCloumns==null ? null : Arrays.asList(subCloumns));
+	}
+	
+	@Override
+	protected void copyTo(SimpleColumn column) {
+		super.copyTo(column);
+		setWidthAdjust(getWidthAdjust());
+	}
+	
+	@Override
+	public ExcelColumn clone() {
+		return (ExcelColumn) super.clone();
 	}
 
 	@Override
@@ -53,7 +69,7 @@ public class ExcelColumnImpl extends ColumnBase implements ExcelColumn {
 		int thisWidth = ExcelHelper.getCellWidth(getTitle());
 		if (hasChildren()) {
 			int subWidth = 0;
-			for (Column column : getSubColumns()) {
+			for (ComplexColumn column : getSubColumns()) {
 				subWidth += ((ExcelColumnImpl) column).getWidth();
 			}
 			if (thisWidth > subWidth) {
@@ -64,5 +80,5 @@ public class ExcelColumnImpl extends ColumnBase implements ExcelColumn {
 			
 		}
 		return thisWidth + getWidthAdjust();
-	};	
+	}
 }

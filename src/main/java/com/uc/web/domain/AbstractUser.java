@@ -1,6 +1,6 @@
 package com.uc.web.domain;
 
-public abstract class AbstractUser<KeyType> extends AbstractNamedObject<KeyType> implements User<KeyType> {
+public abstract class AbstractUser extends AbstractNamedObject implements User {
 	@Override
 	public String getPassword() {
 		return password;

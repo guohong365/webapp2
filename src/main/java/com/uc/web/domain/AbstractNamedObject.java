@@ -2,20 +2,19 @@ package com.uc.web.domain;
 
 import com.uc.web.tools.annotation.FormField;
 
-public abstract class AbstractNamedObject<KeyType> extends EntityBase 
-	implements NamedObjct<KeyType> {
+public abstract class AbstractNamedObject extends EntityBase implements NamedObjct {
 	@FormField(id=true, hidden=true)
-	private KeyType id;
+	private Object id;
 	@FormField(value="名称")
 	private String name;
 	@FormField(value="有效")
 	private Boolean valid;
 	@Override
-	public KeyType getId() {
+	public Object getId() {
 		return id;
 	}
-	@Override
-	public void setId(KeyType id) {
+
+	public void setId(Object id) {
 		this.id = id;
 	}
 	@Override

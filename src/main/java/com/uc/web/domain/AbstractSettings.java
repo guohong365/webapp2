@@ -1,6 +1,5 @@
 package com.uc.web.domain;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,17 +7,17 @@ import java.util.Set;
 
 public abstract class AbstractSettings implements Settings {
 	
-	Map<String, Serializable> settingsMap=new HashMap<>();
-	@Override
-	public Map<String, ? extends Serializable> getMap() {
-		return (Map<String, ? extends Serializable>) settingsMap;
+	Map<String, Object> map=new HashMap<>();
+	
+	protected Map<String, Object> getMap() {
+		return map;
 	}
 
 	@Override
-	public <T extends Serializable> T get(String key) {
+	public <T> T get(String key) {
 		try{
 			@SuppressWarnings("unchecked")
-			T item=(T)settingsMap.get(key);
+			T item=(T)map.get(key);
 			return item;
 		} catch (Exception e) {
 			return null;
@@ -26,27 +25,27 @@ public abstract class AbstractSettings implements Settings {
 	}
 
 	@Override
-	public <T extends Serializable> void put(String key, T item) {
-		settingsMap.put(key, item);		
+	public void put(String key, Object item) {
+		map.put(key, item);		
 	}
 
 	@Override
 	public int size() {
-		return settingsMap.size();
+		return map.size();
 	}
 
 	@Override
 	public Set<String> keys() {
-		return settingsMap.keySet();
+		return map.keySet();
 	}
 
 	@Override
-	public Collection<? extends Serializable> Values() {
-		return (Collection<? extends Serializable>) settingsMap.values();
+	public Collection<Object> Values() {
+		return map.values();
 	}
 
 	@Override
 	public boolean cotainsKey(String key) {
-		return settingsMap.containsKey(key);
+		return map.containsKey(key);
 	}
 }

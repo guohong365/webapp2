@@ -2,10 +2,10 @@ package com.uc.web.service;
 
 import java.util.List;
 
-import com.uc.web.domain.security.IRoleFunctionDefine;
-import com.uc.web.domain.security.UserProfileBase;
+import com.uc.web.domain.security.RoleFunctionDefine;
+import com.uc.web.domain.security.UserProfile;
 
-public interface SecurityServiceBase<KeyType>{
-	UserProfileBase<KeyType> selectUserProfile(String username);
-	List<? extends IRoleFunctionDefine<KeyType>> selectRoleFunctionDefines();
+public interface SecurityServiceBase{
+	UserProfile selectUserProfile(String username);
+	List<RoleFunctionDefine> selectRoleFunctionDefines();
 }

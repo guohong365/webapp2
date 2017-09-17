@@ -1,6 +1,6 @@
 package com.uc.web.domain;
 
-public abstract class AbstractRole<KeyType> extends AbstractNamedObject<KeyType> implements Role<KeyType>{
+public abstract class AbstractRole extends AbstractNamedObject implements Role{
 
 	private Boolean internal;
 

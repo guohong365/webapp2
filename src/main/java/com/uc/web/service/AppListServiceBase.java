@@ -10,9 +10,8 @@ import com.uc.web.persistence.AppOptimizedMapper;
 import com.uc.web.persistence.Example;
 import com.uc.web.persistence.ExampleImpl;
 
-public class AppListServiceBase<QueryFormType extends ListQueryForm, EntityType>
-	extends ServiceBase
-	implements AppListService<QueryFormType, EntityType> {
+public class AppListServiceBase	extends ServiceBase	implements AppListService {
+	
 	private String defaultOrderByClause;
 	
 	@Override
@@ -24,29 +23,27 @@ public class AppListServiceBase<QueryFormType extends ListQueryForm, EntityType>
 		this.defaultOrderByClause = defaultOrderByClause;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public AppListMapper<EntityType> getListMapper(){
+	public AppListMapper getListMapper(){
 		if(getMapper() instanceof AppListMapper)
-			return (AppListMapper<EntityType>) getMapper();
+			return (AppListMapper) getMapper();
 		return null;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public AppOptimizedMapper<QueryFormType, EntityType> getOptimiedMapper(){
+	public AppOptimizedMapper getOptimiedMapper(){
 		if(getMapper() instanceof AppOptimizedMapper)
-			return (AppOptimizedMapper<QueryFormType, EntityType>) getMapper();
+			return (AppOptimizedMapper) getMapper();
 		return null;
 	}	
 	@Override
-	public boolean prepareExample(QueryFormType queryFormType, Example example) {		
+	public boolean prepareExample(ListQueryForm queryFormType, Example example) {		
 		return true;
 	}
 	@Override
-	public boolean prepareQueryForm(QueryFormType queryForm) {
+	public boolean prepareQueryForm(ListQueryForm queryForm) {
 		return true;
 	}
 	@Override
-	public List<EntityType> select(QueryFormType queryForm, long offset, long count) {
+	public List<?> select(ListQueryForm queryForm, long offset, long count) {
 		if(queryForm!=null && !isOrderBy(queryForm)){
 			queryForm.setQueryOrderByClause(getDefaultOrderByClause());
 		}		
@@ -64,7 +61,7 @@ public class AppListServiceBase<QueryFormType extends ListQueryForm, EntityType>
 		return null;
 	}
 	@Override
-	public Long selectCount(QueryFormType queryForm) {
+	public Long selectCount(ListQueryForm queryForm) {
 		Long count = null;
 		if(getOptimiedMapper()!=null){
 			if(prepareQueryForm(queryForm)){
@@ -80,11 +77,11 @@ public class AppListServiceBase<QueryFormType extends ListQueryForm, EntityType>
 		return count;
 	}
 	
-	protected void onAfterListSelected(List<EntityType> list){
+	protected void onAfterListSelected(List<?> list){
 		
 	}
 	
-	protected boolean isOrderBy(QueryFormType queryForm) {
+	protected boolean isOrderBy(ListQueryForm queryForm) {
 		return !StringUtils.isEmpty(queryForm.getQueryOrderByClause());
 	}
 }

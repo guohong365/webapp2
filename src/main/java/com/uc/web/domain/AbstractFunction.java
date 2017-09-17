@@ -1,6 +1,6 @@
 package com.uc.web.domain;
 
-public abstract class AbstractFunction<KeyType> extends AbstractNamedObject<KeyType> implements Function<KeyType> {
+public abstract class AbstractFunction extends AbstractNamedObject implements Function {
 	private String uri;
 	private String uriPattern;
 	@Override

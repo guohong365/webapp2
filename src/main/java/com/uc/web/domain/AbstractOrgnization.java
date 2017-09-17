@@ -1,15 +1,15 @@
 package com.uc.web.domain;
 
-public abstract class AbstractOrgnization<KeyType> extends AbstractNamedObject<KeyType> implements Orgnization<KeyType> {
-	private KeyType parent;
+public abstract class AbstractOrgnization extends AbstractTreeNamedObject implements Orgnization {
+	private Object parent;
 
 	@Override
-	public KeyType getParent() {
+	public Object getParent() {
 		return parent;
 	}
 
 	@Override
-	public void setParent(KeyType parent) {
+	public void setParent(Object parent) {
 		this.parent = parent;
 	}
 }

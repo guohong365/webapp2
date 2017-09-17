@@ -3,7 +3,7 @@ package com.uc.web.controller;
 import org.springframework.ui.Model;
 
 public abstract class AbstractDetailController<KeyType, EntityType>
-	extends AbstractDetailControllerBase<KeyType, EntityType>
+	extends AbstractDetailControllerBase
 	implements DetailController<KeyType, EntityType> {
 		
 	@Override

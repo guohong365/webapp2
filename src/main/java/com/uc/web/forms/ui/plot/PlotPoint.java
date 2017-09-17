@@ -1,8 +1,8 @@
 package com.uc.web.forms.ui.plot;
 
-import com.uc.web.forms.IJsonString;
+import com.uc.web.forms.JsonString;
 
-public interface PlotPoint<XType, YType> extends IJsonString {
+public interface PlotPoint<XType, YType> extends JsonString {
 	public XType getX();
 	public void setX(XType x);
 	public YType getY();

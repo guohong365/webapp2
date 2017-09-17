@@ -10,7 +10,7 @@ public class EasyUIOutlookGroupFormator extends AbstractUIFormatorBase implement
 	@Override
 	public void formatHTML(TreeViewNode componet, StringBuilder builder) {
 		TreeViewNode node=(TreeViewNode) componet;
-			MenuTreeItem<?> menuItem=(MenuTreeItem<?>) node.getTag();
+			MenuTreeItem menuItem=(MenuTreeItem) node.getTag();
 			builder.append(String.format(
 						"<div title=\"%s\" data-options=\"iconCls:'%s'\" style=\"overflow:auto;padding:10px;\"><ul>", 
 						menuItem.getName(), menuItem.getIcon()));

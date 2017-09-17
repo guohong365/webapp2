@@ -6,25 +6,23 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.uc.web.domain.AbstractUserRoles;
-import com.uc.web.domain.Menu;
-import com.uc.web.domain.IMenuTree;
+import com.uc.web.domain.MenuTree;
 import com.uc.web.domain.Orgnization;
 import com.uc.web.domain.Role;
-import com.uc.web.domain.Settings;
 
-public abstract class AbstractUserProfile<KeyType>
-	extends AbstractUserRoles<KeyType>
-	implements UserProfileBase<KeyType> {
+public abstract class AbstractUserProfile
+	extends AbstractUserRoles
+	implements UserProfile {
 	
-	private Orgnization<KeyType> orgnization;
-	private Settings settings;
+	private Orgnization orgnization;
+	private UserSettings settings;
 	
 	@Override
-	public Settings getSettings() {
+	public UserSettings getSettings() {
 		return settings;
 	}
 	@Override
-	public void setSettings(Settings settings) {
+	public void setSettings(UserSettings settings) {
 		this.settings = settings;
 	}
 	
@@ -53,25 +51,25 @@ public abstract class AbstractUserProfile<KeyType>
 		return getUser()==null?false:getUser().getValid();
 	}
 	@Override
-	public Orgnization<KeyType> getOrgnization() {
+	public Orgnization getOrgnization() {
 		return orgnization;
 	}
 	@Override
-	public void setOrgnization(Orgnization<KeyType> org) {
+	public void setOrgnization(Orgnization org) {
 		orgnization=org;
 		
 	}
 
 	private static final long serialVersionUID = 3129210443720184408L;
 
-	public IMenuTree<KeyType,? extends Menu<KeyType>> getMenu(){
+	public MenuTree getMenu(){
 		return menuTree;
 	}
-	public void setMenu(IMenuTree<KeyType,? extends Menu<KeyType>> menu){
+	public void setMenu(MenuTree menu){
 		menuTree=menu;
 	}
 
-	private IMenuTree<KeyType, ? extends Menu<KeyType>> menuTree;
+	private MenuTree menuTree;
 
 	Collection<GrantedAuthority> authoryties;
 	
@@ -81,7 +79,7 @@ public abstract class AbstractUserProfile<KeyType>
 			if(authoryties==null){
 				authoryties=new ArrayList<>();
 			}
-			for(Role<KeyType> role : getRoles()){
+			for(Role role : getRoles()){
 				GrantedAuthority authority=new SimpleGrantedAuthority("ROLE_" + role.getId());
 				authoryties.add(authority);
 			}

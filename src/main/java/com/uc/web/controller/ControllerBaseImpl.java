@@ -15,7 +15,12 @@ public abstract class ControllerBaseImpl extends LoggerSupportorImpl
     private String moduleTitle;
     private String moduleName;
     private String entityName;
-    
+	private static final String PAGE_200 = "/error/200";
+	private static final String PAGE_404 = "/error/404";
+	private static final String PAGE_500 = "/error/500";
+	private String page200=PAGE_200;
+	private String page404=PAGE_404;
+	private String page500=PAGE_500;
 	@Override
 	public Service getService() {
 		return service;
@@ -74,6 +79,30 @@ public abstract class ControllerBaseImpl extends LoggerSupportorImpl
 
 	public void setModuleName(String modulelName) {
 		this.moduleName = modulelName;
+	}
+
+	public String getPage200() {
+		return page200;
+	}
+
+	public void setPage200(String page200) {
+		this.page200 = page200;
+	}
+
+	public String getPage404() {
+		return page404;
+	}
+
+	public void setPage404(String page404) {
+		this.page404 = page404;
+	}
+
+	public String getPage500() {
+		return page500;
+	}
+
+	public void setPage500(String page500) {
+		this.page500 = page500;
 	}	
 	
 }

@@ -13,8 +13,8 @@ public interface Exportor {
 	public static final short UNDERLINE=8;
 	public static final int MAX_ROW = 10000;
 	
-	public void Export(String fileName) throws IOException;
-	public void Export(OutputStream outputStream) throws IOException;
-	public void Export(HttpServletRequest request, HttpServletResponse response) throws IOException;
-	public String getDefaultFileName();
+	void Export(String fileName) throws IOException;
+	void Export(OutputStream outputStream) throws IOException;
+	void Export(HttpServletRequest request, HttpServletResponse response) throws IOException;
+	String getFileName();
 }

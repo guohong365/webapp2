@@ -3,7 +3,6 @@ package com.uc.web.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -12,8 +11,7 @@ import com.uc.web.domain.Code;
 import com.uc.web.domain.security.UserProfile;
 import com.uc.web.service.AppDetailService;
 
-public class AbstractDetailControllerBase<KeyType,	EntityType> 
-	extends ControllerBaseImpl {
+public class AbstractDetailControllerBase extends ControllerBaseImpl {
 
 	protected static final String PAGE_VIEW = "/view";
 	protected static final String PAGE_MODIFY = "/modify";
@@ -44,24 +42,10 @@ public class AbstractDetailControllerBase<KeyType,	EntityType>
 		return getPageBasePath() + PAGE_NEW;
 	}
 
-	@SuppressWarnings("unchecked")
-	public AppDetailService<KeyType, EntityType> getService(){
+	public AppDetailService getService(){
 		if(super.getService() instanceof AppDetailService)
-			return (AppDetailService<KeyType, EntityType>) super.getService();
+			return (AppDetailService) super.getService();
 		return null;
-	}
-	
-	private void logCodes(Map<String, List<? extends Code<?>>> codes) {
-		if(getLogger().isTraceEnabled() && codes!=null){
-			getLogger().trace("--------加载查询条件代码:" + codes.size() + "个...");
-			for(Entry<String, List<? extends Code<?>>> entry: codes.entrySet()){
-				if(entry!=null){
-					System.err.println("\t 代码: ["+entry.getKey()+"] ");
-					System.err.println(entry.getValue());
-				}
-			}
-			getLogger().trace("--------代码加载完成-----------");			
-		}
 	}
 	
 	private String entityClassName;
@@ -73,42 +57,41 @@ public class AbstractDetailControllerBase<KeyType,	EntityType>
 		return entityClassName;
 	}
 	
-	private EntityType defaultDetail;
-	public EntityType getDefaultDetail() {
+	private Object defaultDetail;
+	public Object getDefaultDetail() {
 		return defaultDetail;
 	}
-	public void setDefaultDetail(EntityType defaultDetail) {
+	public void setDefaultDetail(Object defaultDetail) {
 		this.defaultDetail = defaultDetail;
 	}
 
-	@SuppressWarnings("unchecked")
-	protected EntityType createEntity(){
-		if(!StringUtils.isEmpty(getEntityClassName())) return (EntityType)createInstanceByName(getEntityClassName());
+	protected Object createEntity(){
+		if(!StringUtils.isEmpty(getEntityClassName())) return createInstanceByName(getEntityClassName());
 		if(getDefaultDetail()!=null){
 			return getDefaultDetail();
 		}
 		return onCreateEntity();
 	}
 
-	protected EntityType onCreateEntity() {
+	protected Object onCreateEntity() {
 		return null;
 	}
 
-	protected Map<String, List<? extends Code<?>>> onGetNewCodes(UserProfile user) {
+	protected Map<String, List<Code>> onGetNewCodes(UserProfile user) {
 		return new HashMap<>();
 	}
 
-	protected Map<String, List<? extends Code<?>>> onGetModifyCodes(UserProfile user, EntityType detail) {
+	protected Map<String, List<Code>> onGetModifyCodes(UserProfile user, Object detail) {
 		return new HashMap<>();
 	}
 
-	protected void onAfterSelectDetail(UserProfile user, String action, EntityType detail) {		
+	protected void onAfterSelectDetail(UserProfile user, String action, Object detail) {		
 	}
 
-	protected String onGetDetailPage(String action, KeyType selectedId, Model model) {
+	protected String onGetDetailPage(String action, Object selectedId, Model model) {
 		UserProfile user=getUser();
-		EntityType detail=null;
-		Map<String, List<? extends Code<?>>> codes;		
+		Object detail=null;
+		Map<String, List<Code>> codes;		
 		String pageName="";		
 		getLogger().trace("--------获取详细信息页，操作=["+ action	+ "] 记录ID=["+ selectedId + "]--------");
 		
@@ -120,7 +103,6 @@ public class AbstractDetailControllerBase<KeyType,	EntityType>
 			//addDetailToModel(action, detail, model);
 			getLogger().trace("------ prepare new page codes -----");
 			codes=onGetNewCodes(user);
-			logCodes(codes);			
 			model.addAllAttributes(codes);			
 			pageName=getNewPageName();
 			break;
@@ -131,7 +113,6 @@ public class AbstractDetailControllerBase<KeyType,	EntityType>
 			getLogger().trace(detail.toString());
 			getLogger().trace("------ prepare new page codes -----");
 			codes=onGetModifyCodes(user, detail);			
-			logCodes(codes);			
 			model.addAllAttributes(codes);			
 			pageName=getModifyPageName();
 			break;
@@ -182,27 +163,27 @@ public class AbstractDetailControllerBase<KeyType,	EntityType>
 		return PAGE_CANCELATE;
 	}
 
-	protected void onBeforSaveDetail(UserProfile user, String action, EntityType detail) throws Exception {
+	protected void onBeforSaveDetail(UserProfile user, String action, Object detail) throws Exception {
 		
 	}
-	protected void saveNew(EntityType detail){
+	protected void saveNew(Object detail){
 		getService().insert(detail);
 	}
-	protected void saveModify(EntityType detail){
+	protected void saveModify(Object detail){
 		getService().update(detail);
 	}
-	protected void saveDelete(EntityType detail){
+	protected void saveDelete(Object detail){
 		getService().delete(detail);
 	}
-	protected void saveCancelate(EntityType detail){		
+	protected void saveCancelate(Object detail){		
 	}
-	protected void saveReactive(EntityType detail){		
+	protected void saveReactive(Object detail){		
 	}
-	protected void saveDisable(EntityType detail){		
+	protected void saveDisable(Object detail){		
 	}
 	
 
-	protected String onPostDetailPage(String action, EntityType detail) {
+	protected String onPostDetailPage(String action, Object detail) {
 		UserProfile user =getUser();
 		getLogger().trace("--------保存记录修改  操作["+action+"] -----");
 		getLogger().trace("--------页面记录---------------");
@@ -252,7 +233,7 @@ public class AbstractDetailControllerBase<KeyType,	EntityType>
 		return "OK";
 	}
 
-	protected void addEntityToModel(String action, EntityType detail, Model model) {
+	protected void addEntityToModel(String action, Object detail, Model model) {
 		model.addAttribute(ControllerBase.PARAM_NAME_ENTITY_NAME, getEntityName());
 		model.addAttribute(ControllerBase.PARAM_NAME_ACTION, action);
 		model.addAttribute(ControllerBase.PARAM_NAME_ACTION_NAME, WebAction.getActoinName(action)+getEntityName());

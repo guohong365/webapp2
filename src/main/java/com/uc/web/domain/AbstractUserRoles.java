@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public abstract class AbstractUserRoles<KeyType> extends EntityBase implements UserRole<KeyType> {
+public abstract class AbstractUserRoles extends EntityBase implements UserRole {
 	@Override
-	public List<Role<KeyType>> getRoles() {		
+	public List<Role> getRoles() {		
 		return roles;
 	}
 	@Override
-	public void addRole(Role<KeyType> role) {
+	public void addRole(Role role) {
 		roles.add(role);
 	}
 	@Override
-	public void addRole(Collection<? extends Role<KeyType>> roles) {
+	public void addRole(Collection<? extends Role> roles) {
 		this.roles.addAll(roles);
 		
 	}
 	@Override
-	public void removeRole(Role<KeyType> role) {
+	public void removeRole(Role role) {
 		roles.remove(role);
 	}
 	@Override
@@ -27,22 +27,22 @@ public abstract class AbstractUserRoles<KeyType> extends EntityBase implements U
 		roles.clear();
 	}
 	@Override
-	public Role<KeyType> findRole(KeyType roleId) {
-		for (Role<KeyType> iRole : roles) {
+	public Role findRole(Object roleId) {
+		for (Role iRole : roles) {
 			if(iRole.getId().equals(roleId)){
 				return iRole;
 			}
 		}
 		return null;
 	}
-	private User<KeyType> user;
+	private User user;
 	
-	private List<Role<KeyType>> roles=new ArrayList<>();
+	private List<Role> roles=new ArrayList<>();
 	
-	public User<KeyType> getUser() {
+	public User getUser() {
 		return user;
 	}
-	public void setUser(User<KeyType> user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 }

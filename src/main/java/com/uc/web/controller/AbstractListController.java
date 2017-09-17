@@ -8,13 +8,19 @@ import org.springframework.ui.Model;
 import com.uc.web.forms.ListQueryForm;
 import com.uc.web.forms.ui.componet.PageCtrlImpl;
 
-public abstract class AbstractListController<QueryFormType extends ListQueryForm, EntityType>
-	extends AbstractListControllerBase<QueryFormType, EntityType>
+public abstract class AbstractListController<QueryFormType extends ListQueryForm>
+	extends AbstractListControllerBase
 	implements ListController<QueryFormType>, ExportController<QueryFormType>  {
 
 	@Override
 	public String getListPage(Model model) {
 		return onGetListPage(model);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public QueryFormType createQueryForm() {
+		return (QueryFormType) super.createQueryForm();
 	}
 	
 	@Override

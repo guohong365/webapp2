@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.uc.web.forms.DetailListQueryForm;
 import com.uc.web.forms.ui.componet.PageCtrlImpl;
 
-public abstract class AbstractDetailListControllerProxy<KeyType, EntityType, DetailQueryFormType extends DetailListQueryForm<KeyType>, DetailListType> 
+public abstract class AbstractDetailListControllerProxy<KeyType, EntityType, DetailQueryFormType extends DetailListQueryForm, DetailListType> 
 	extends AbstractDetailControllerProxy<KeyType, EntityType> 
 	implements DetailListControllerProxy<KeyType, EntityType, DetailQueryFormType> {
 

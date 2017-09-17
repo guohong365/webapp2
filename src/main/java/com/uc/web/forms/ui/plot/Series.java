@@ -2,9 +2,9 @@ package com.uc.web.forms.ui.plot;
 
 import java.util.List;
 
-import com.uc.web.forms.IJsonString;
+import com.uc.web.forms.JsonString;
 
-public interface Series<XType, YType> extends IJsonString {	
+public interface Series<XType, YType> extends JsonString {	
 	String getLabel();
 	PlotOption getOption();
 	void setOption(PlotOption option);

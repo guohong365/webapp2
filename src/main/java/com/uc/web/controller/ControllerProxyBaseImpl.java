@@ -15,8 +15,10 @@ import com.uc.web.forms.editor.IntegerEditor;
 import com.uc.web.forms.editor.LongEditor;
 
 public abstract class ControllerProxyBaseImpl extends ControllerBaseImpl implements ControllerProxy {
-	
+
 	private String baseUri;
+
+	
 	private ControllerBase controller;
 	
 	public void setBaseUri(String baseUri) {
@@ -72,6 +74,5 @@ public abstract class ControllerProxyBaseImpl extends ControllerBaseImpl impleme
 		binder.registerCustomEditor(Long.class, new LongEditor());
 		binder.registerCustomEditor(BigDecimal.class, new BigDecimalEditor());		
 	}
-	
 	
 }

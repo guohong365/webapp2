@@ -6,13 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 public class IntegerUtils {
-	public static boolean isEmpty(Long integer){
-		return integer==null || integer==0;
-	}
-	public static boolean isEmpty(Integer integer){
-		return integer==null || integer==0;
-	}
-	 
 	public static Set<Long> getIntSet(String[] strs){
 		Set<Long> set=new HashSet<>();
 		for(String id : strs){
@@ -34,6 +27,10 @@ public class IntegerUtils {
 			}
 		}
 		return set;
+	}
+	
+	public static boolean isEmpty(Object value){
+		return !(value!=null && (value instanceof Number) && ((Number)value).intValue()>0);
 	}
 
 }

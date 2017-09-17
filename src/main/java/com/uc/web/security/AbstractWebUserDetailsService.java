@@ -5,15 +5,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.uc.utils.LoggerSupportor;
-import com.uc.web.domain.security.UserProfileBase;
+import com.uc.web.domain.security.UserProfile;
 import com.uc.web.service.SecurityServiceBase;
 
 public abstract class AbstractWebUserDetailsService<KeyType> 
 	implements UserDetailsService, LoggerSupportor {
 
-	private SecurityServiceBase<KeyType> securityService;
+	private SecurityServiceBase securityService;
 	
-	public void setSecurityService(SecurityServiceBase<KeyType> securityService) {
+	public void setSecurityService(SecurityServiceBase securityService) {
 		this.securityService = securityService;
 	}
 
@@ -21,7 +21,7 @@ public abstract class AbstractWebUserDetailsService<KeyType>
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		getLogger().trace("loading user["+ username +"]。。。。。");
 		try {
-		  UserProfileBase<KeyType> userInfo=securityService.selectUserProfile(username);
+		  UserProfile userInfo=securityService.selectUserProfile(username);
 		  if(userInfo!=null){
 		    getLogger().trace("user info loaded。。。。。" + userInfo.getUsername() + " " + userInfo.isEnabled());
 		    return userInfo;

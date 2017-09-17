@@ -2,7 +2,7 @@ package com.uc.web.controller;
 
 import com.uc.web.forms.DetailListQueryForm;
 
-public interface DetailListController<KeyType, EntityType, DetailQueryFormType extends DetailListQueryForm<KeyType>>
+public interface DetailListController<KeyType, EntityType, DetailQueryFormType extends DetailListQueryForm>
 		extends 
 		DetailController<KeyType, EntityType>, 
 		ListController<DetailQueryFormType>{

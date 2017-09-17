@@ -1,8 +1,7 @@
 package com.uc.web.persistence;
 
-public interface AppUuidMapper<DetailKeyType, DetailType> extends Mapper {
-	
-	DetailKeyType selectIdByUuid(String uuid);	
-	DetailType selectByUuid(String uuid);
+public interface AppUuidMapper extends Mapper {
+	Object selectIdByUuid(String uuid);	
+	Object selectByUuid(String uuid);
 
 }

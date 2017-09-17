@@ -6,11 +6,6 @@ import java.util.Map;
 import com.uc.utils.ObjectCache;
 
 public class ObjectCacheImpl implements ObjectCache {
-	
-	protected ObjectCacheImpl(){
-		
-	}
-	
 	private Map<String,Object> objects=new HashMap<>();
 	
 	@Override

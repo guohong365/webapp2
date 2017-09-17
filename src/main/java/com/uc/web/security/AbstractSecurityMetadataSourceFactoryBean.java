@@ -15,7 +15,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.uc.utils.LoggerSupportor;
-import com.uc.web.domain.security.IRoleFunctionDefine;
+import com.uc.web.domain.security.RoleFunctionDefine;
 import com.uc.web.service.SecurityServiceBase;
 
 public class AbstractSecurityMetadataSourceFactoryBean<KeyType> 
@@ -29,13 +29,13 @@ public class AbstractSecurityMetadataSourceFactoryBean<KeyType>
 		logger=LoggerFactory.getLogger(getClass());
 	}
 
-	private SecurityServiceBase<KeyType> securityService;
+	private SecurityServiceBase securityService;
 	
-	public SecurityServiceBase<KeyType> getSecurityService() {
+	public SecurityServiceBase getSecurityService() {
 		return securityService;
 	}
 
-	public void setSecurityService(SecurityServiceBase<KeyType> securityService) {
+	public void setSecurityService(SecurityServiceBase securityService) {
 		this.securityService = securityService;
 	}
 	
@@ -46,11 +46,11 @@ public class AbstractSecurityMetadataSourceFactoryBean<KeyType>
 
 	@PostConstruct
 	public void loadResourceDefine(){
-		List<? extends IRoleFunctionDefine<KeyType>> list = securityService.selectRoleFunctionDefines();
+		List<? extends RoleFunctionDefine> list = securityService.selectRoleFunctionDefines();
 		RequestMatcher matcher=null;
 		String pattern=null;
 		Collection<ConfigAttribute> configAttributes=null;
-		for (IRoleFunctionDefine<KeyType> resource : list) {
+		for (RoleFunctionDefine resource : list) {
 			
 			
 			if(!resource.getFunction().getUriPattern().equals(pattern)){ //新的pattern				

@@ -7,15 +7,13 @@ import com.uc.utils.export.Exportor;
 import com.uc.web.forms.ListQueryForm;
 import com.uc.web.forms.ui.componet.PageCtrl;
 
-public class AppWebListServiceBase<QueryFormType extends ListQueryForm, EntityType>
-	extends AppListServiceBase<QueryFormType, EntityType>
-	implements AppWebListService<QueryFormType, EntityType>
+public class AppWebListServiceBase	extends AppListServiceBase	implements AppWebListService
 {
 
 	@Override
-	public List<EntityType> select(QueryFormType queryForm, PageCtrl pageCtrl) {		
+	public List<?> select(ListQueryForm queryForm, PageCtrl pageCtrl) {		
 		Long count=null;
-		List<EntityType> list;
+		List<?> list;
 		
 		count=selectCount(queryForm);		
 		if(count==null || count == 0){
@@ -33,7 +31,7 @@ public class AppWebListServiceBase<QueryFormType extends ListQueryForm, EntityTy
 	}
 
 	@Override
-	public List<EntityType> selectForExport(QueryFormType queryForm) {
+	public List<?> selectForExport(ListQueryForm queryForm) {
 		Long count= selectCount(queryForm);
 		if(count==null){
 			return new ArrayList<>();

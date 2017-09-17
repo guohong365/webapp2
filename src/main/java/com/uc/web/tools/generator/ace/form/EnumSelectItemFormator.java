@@ -2,7 +2,7 @@ package com.uc.web.tools.generator.ace.form;
 
 import java.util.List;
 
-import com.uc.web.domain.basic.BasicCode;
+import com.uc.web.domain.Code;
 import com.uc.web.tools.generator.FormFieldDescriptor;
 import com.uc.web.tools.generator.utils.FormFormatorHelper;
 
@@ -29,8 +29,8 @@ public class EnumSelectItemFormator extends EnumItemFormatorBase {
 					item.getName(),
 					item.getName())
 				);
-		List<BasicCode> codes=getEnumValues(item.getType());
-		for(BasicCode code: codes){
+		List<Code> codes=getEnumValues(item.getType());
+		for(Code code: codes){
 			builder.append(String.format(option, code.getCode(), code.getValue()));
 		}
 		builder.append(tail);

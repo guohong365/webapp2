@@ -2,6 +2,8 @@ package com.uc.web.service;
 
 import java.util.List;
 
-public interface AppExportService<QueryFormType, DetailType> extends Service {
-	List<DetailType> selectForExport(QueryFormType queryForm);
+import com.uc.web.forms.ListQueryForm;
+
+public interface AppExportService extends Service {
+	List<?> selectForExport(ListQueryForm queryForm);
 }

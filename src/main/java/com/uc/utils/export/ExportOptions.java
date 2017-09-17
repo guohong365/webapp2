@@ -1,5 +1,9 @@
 package com.uc.utils.export;
 
-public interface ExportOptions {
+import java.util.Collection;
+import com.uc.utils.export.excel.CellOptions;
 
+public interface ExportOptions {
+	<T> T get(String name);
+	<T> Collection<CellOptions> getAll();
 }

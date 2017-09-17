@@ -8,7 +8,7 @@ import com.uc.web.forms.ui.componet.PageCtrlImpl;
 public abstract class AbstractDetailListController<
 	KeyType, 
 	EntityType,
-	DetailQueryFormType extends DetailListQueryForm<KeyType>>
+	DetailQueryFormType extends DetailListQueryForm>
 	extends AbstractDetailController<KeyType, EntityType>
 	implements	DetailListController<KeyType,EntityType, DetailQueryFormType>  {
 	
@@ -25,7 +25,7 @@ public abstract class AbstractDetailListController<
 	@Override
 	public String getDetailPage(String action, KeyType selectedId, Model model) {
 		DetailQueryFormType queryInput=createQueryForm();
-		queryInput.setQuerySelectedId(selectedId);
+		queryInput.setQueryMainId(selectedId);
 		getListController().postListPage(queryInput, model);
 		return super.onGetDetailPage(action, selectedId, model);
 	}	

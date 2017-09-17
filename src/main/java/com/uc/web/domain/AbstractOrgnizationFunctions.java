@@ -4,39 +4,39 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public abstract class AbstractOrgnizationFunctions<KeyType> implements OrgnizationFunctions<KeyType> {
+public abstract class AbstractOrgnizationFunctions implements OrgnizationFunctions {
 	
-	private Orgnization<KeyType> orgnization;
-	private List<Function<KeyType>> functions=new ArrayList<>();
+	private Orgnization orgnization;
+	private List<Function> functions=new ArrayList<>();
 
 	@Override
-	public Orgnization<KeyType> getOrgnization() {
+	public Orgnization getOrgnization() {
 		return orgnization;
 	}
 
 	@Override
-	public void setOrgnization(Orgnization<KeyType> org) {
+	public void setOrgnization(Orgnization org) {
 		orgnization=org;
 	}
 
 	@Override
-	public List<Function<KeyType>> getFunctions() {
+	public List<Function> getFunctions() {
 		return functions;
 	}
 
 	@Override
-	public void addFunction(Function<KeyType> func) {
+	public void addFunction(Function func) {
 		functions.add(func);
 		
 	}
 
 	@Override
-	public void addFunction(Collection<? extends Function<KeyType>> funcs) {
+	public void addFunction(Collection<? extends Function> funcs) {
 		functions.addAll(funcs);		
 	}
 
 	@Override
-	public void removeFunction(Function<KeyType> func) {
+	public void removeFunction(Function func) {
 		functions.remove(func);
 	}
 
@@ -46,8 +46,8 @@ public abstract class AbstractOrgnizationFunctions<KeyType> implements Orgnizati
 	}
 
 	@Override
-	public Function<KeyType> findFunction(KeyType funcId) {
-		for (Function<KeyType> iFunction : functions) {
+	public Function findFunction(Object funcId) {
+		for (Function iFunction : functions) {
 			if(iFunction.getId().equals(funcId)){
 				return iFunction;
 			}				

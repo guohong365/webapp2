@@ -1,33 +1,72 @@
 package com.uc.web.forms;
 
-import java.util.Collection;
+import java.util.List;
 
-public class ListColumnImpl extends ColumnBase {
+public class ListColumnImpl extends SimpleColumnImpl implements ListColumn {
+	private boolean sortable;
 
-	public ListColumnImpl(int index, String title){	
-		this(index, title, false);
+	@Override
+	public boolean isSortable() {
+		return sortable;
+	}
+	@Override
+	public void setSortable(boolean sortable) {
+		this.sortable=sortable;
 	}
 	
-	public ListColumnImpl(int index, String title, boolean sortable){
-		this(index,title, 1, 1, true, sortable);
+	public ListColumnImpl() {
+		this(null);
 	}
 	
-	public ListColumnImpl(int index, String title, boolean show, boolean sortable){
-		this(index, title, 1, 1, show, sortable);
+	public ListColumnImpl(String title){
+		this(title, true);
 	}
 	
-	public ListColumnImpl(int index, String title, int colSpan, int rowSpan, boolean show, boolean sortable){
-		super(index, title, colSpan, rowSpan, show, sortable);
+	public ListColumnImpl(String title, boolean show){
+		this(title, show, -1);
 	}
 	
-
+	public ListColumnImpl(String title, boolean show, int sort){
+		this(title, show, sort, true);
+	}
 	
-	public static String getArrayString(Collection<Column> columns){
+	public ListColumnImpl(String title, boolean show, int sort, boolean sortable){
+		super(title, show, sort);
+		this.sortable=sortable;
+	}
+	
+	@Override
+	protected void copyTo(SimpleColumn column) {
+		super.copyTo(column);
+		if(column instanceof ListColumn){
+			ListColumn listColumn=(ListColumn) column;
+			listColumn.setSortable(isSortable());
+		}
+	}
+	
+	@Override
+	public ListColumn clone() {
+		return (ListColumn) super.clone();
+	}
+	
+	public static String getArrayString(List<ListColumn> columns){
 		StringBuilder builder=new StringBuilder();
-		for (Column column:columns) {
-			builder.append(column.isShow()? "1":"0");
+		for (ListColumn column:columns) {
+			builder.append(column.isShow()? "1":"0");			
 		}
 		return builder.toString();
+	}
+	@Override
+	public String toJson(){
+	   StringBuilder builder=new StringBuilder();
+	   builder.append('{').append("\"title\" :");
+	   if(getTitle()==null) builder.append("null ,");
+	   else builder.append('"').append(getTitle()).append('"').append(',');
+	   builder.append("\"sort\" :").append(getSort()).append(',')
+	   .append("\"show\" : ").append(isShow())
+	   .append("\"sortable\" :").append(isSortable())
+	   .append('}');
+	   return builder.toString();
 	}
 	
 }

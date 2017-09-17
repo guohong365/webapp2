@@ -35,4 +35,8 @@ public interface ControllerBase extends LoggerSupportor {
 	String getPageBasePath();
 	String getModuleName();
 	String getModuleTitle();
+	
+	String getPage404();
+	String getPage200();
+	String getPage500();
 }

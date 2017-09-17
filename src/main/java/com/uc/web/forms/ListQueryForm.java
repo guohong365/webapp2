@@ -1,15 +1,14 @@
 package com.uc.web.forms;
 
-import java.util.Map;
+import com.uc.web.domain.security.UserProfile;
 
-public interface ListQueryForm extends QueryFormBase {	
+public interface ListQueryForm {	
 	String getQueryOrder();
 	void setQueryOrder(String order);
-
 	String getQueryOrderBy();
 	void setQueryOrderBy(String orderBy);
 	String getQueryOrderByClause();
 	void setQueryOrderByClause(String orderByClause);
-		
-	Map<String, String> getColumnMap();
+	UserProfile getUser();
+	void setUser(UserProfile user);
 }

@@ -6,64 +6,58 @@ import com.uc.web.persistence.AppSelectByKeyMapper;
 import com.uc.web.persistence.AppUpdateMapper;
 import com.uc.web.persistence.AppUuidMapper;
 
-public class AppDetailServiceBase<DetailKeyType, DetailType extends Object> 
-	extends ServiceBase 
-	implements AppDetailService<DetailKeyType, DetailType> {
+public class AppDetailServiceBase extends ServiceBase 
+	implements AppDetailService {
 	
-	@SuppressWarnings("unchecked")
-	public AppInsertMapper<DetailType> getInsertMapper(){
+	public AppInsertMapper getInsertMapper(){
 		if(getMapper() instanceof AppInsertMapper){ 
-			return (AppInsertMapper<DetailType>)getMapper();
+			return (AppInsertMapper)getMapper();
 		}
 		return null;
 	}
-	@SuppressWarnings("unchecked")
-	public AppUpdateMapper<DetailType> getUpdateMapper(){
+	public AppUpdateMapper getUpdateMapper(){
 		if(getMapper() instanceof AppUpdateMapper){
-			return (AppUpdateMapper<DetailType>)getMapper();
+			return (AppUpdateMapper)getMapper();
 		}
 		return null;
 	}
-	@SuppressWarnings("unchecked")
-	public AppDeleteMapper<DetailType> getDeleteMapper(){
+	public AppDeleteMapper getDeleteMapper(){
 		if(getMapper() instanceof AppDeleteMapper){
-			return (AppDeleteMapper<DetailType>) getMapper();
+			return (AppDeleteMapper) getMapper();
 		}
 		return null;
 	}
-	@SuppressWarnings("unchecked")
-	public AppSelectByKeyMapper<DetailKeyType, DetailType> getSelectByKeyMapper(){
+	public AppSelectByKeyMapper getSelectByKeyMapper(){
 		if(getMapper() instanceof AppSelectByKeyMapper){
-			return (AppSelectByKeyMapper<DetailKeyType, DetailType>) getMapper();
+			return (AppSelectByKeyMapper) getMapper();
 		}
 		return null;
 	}
-	@SuppressWarnings("unchecked")
-	public AppUuidMapper<DetailKeyType, DetailType> getUuidMapper(){
+	public AppUuidMapper getUuidMapper(){
 		if(getMapper() instanceof AppUuidMapper){
-			return (AppUuidMapper<DetailKeyType, DetailType>)getMapper();
+			return (AppUuidMapper)getMapper();
 		}
 		return null;
 	}
 	
-	protected void onAfterSelected(DetailType detail){
+	protected void onAfterSelected(Object detail){
 	}
 	
 
 	@Override
-	public DetailType selectById(DetailKeyType id) {
-		DetailType detail= getSelectByKeyMapper().selectById(id);
+	public Object selectById(Object id) {
+		Object detail= (Object) getSelectByKeyMapper().selectById(id);
 		onAfterSelected(detail);
 		return detail;
 	}
 	
-	protected void onBeforeUpdate(DetailType detail){
+	protected void onBeforeUpdate(Object detail){
 	}
-	protected void onAfterUpdate(DetailType detail){
+	protected void onAfterUpdate(Object detail){
 	}
 
 	@Override
-	public int update(DetailType entity) {
+	public int update(Object entity) {
 		if(getUpdateMapper()==null) return 0;
 		
 		onBeforeUpdate(entity);
@@ -74,13 +68,13 @@ public class AppDetailServiceBase<DetailKeyType, DetailType extends Object>
 		return ret;
 	}
 	
-	protected void onBeforeUpdateSelective(DetailType detail){
+	protected void onBeforeUpdateSelective(Object detail){
 	}
-	protected void onAfterUpdateSelective(DetailType detail){
+	protected void onAfterUpdateSelective(Object detail){
 	}
 	
 	@Override
-	public int updateSelective(DetailType entity) {
+	public int updateSelective(Object entity) {
 		if(getUpdateMapper()==null) return 0;
 		onBeforeUpdateSelective(entity);
 		int ret= getUpdateMapper().updateDetailSelective(entity);
@@ -91,13 +85,13 @@ public class AppDetailServiceBase<DetailKeyType, DetailType extends Object>
 	};
 	
 	
-	protected void onBeforeInsert(DetailType detail){
+	protected void onBeforeInsert(Object detail){
 	}
-	protected void onAfterInsert(DetailType detail){
+	protected void onAfterInsert(Object detail){
 	}
 
 	@Override
-	public int insert(DetailType entiry) {
+	public int insert(Object entiry) {
 		if(getInsertMapper()==null) return 0;
 		onBeforeInsert(entiry);
 		int ret= getInsertMapper().insertDetail(entiry);
@@ -106,13 +100,13 @@ public class AppDetailServiceBase<DetailKeyType, DetailType extends Object>
 		} 
 		return ret;
 	}
-	protected void onBeforeDelete(DetailType detail){
+	protected void onBeforeDelete(Object detail){
 	}
-	protected void onAfterDeleted(DetailType detail){
+	protected void onAfterDeleted(Object detail){
 	}
 
 	@Override
-	public int delete(DetailType detail) {
+	public int delete(Object detail) {
 		if(getDeleteMapper()==null) return 0;
 		onBeforeDelete(detail);
 		int ret= getDeleteMapper().deleteDetail(detail);
