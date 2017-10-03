@@ -1,10 +1,10 @@
-package com.uc.web.forms.ui.flot;
+package com.uc.web.forms.json;
 
 import java.lang.reflect.Array;
 
 import com.uc.web.forms.JsonString;
 
-public interface PlotValue extends JsonString {	
+public interface JsonValue extends JsonString {	
 	Object getValue();
 	@Override
 	default String toJson() {
@@ -21,7 +21,7 @@ public interface PlotValue extends JsonString {
 				if(item instanceof JsonString){
 					ret += ((JsonString)Array.get(getValue(), i)).toJson();
 				} else {
-					JsonString json=new PlotValueImpl(item);
+					JsonString json=new JsonValueImpl(item);
 					ret += json.toJson();
 				}
 				if(i< length -1) ret+=",";

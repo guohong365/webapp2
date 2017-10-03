@@ -1,13 +1,13 @@
-package com.uc.web.forms.ui.flot;
+package com.uc.web.forms.json;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class PlotValueCollectionImpl extends ArrayList<PlotValue> implements PlotValueCollection {
+public class PlotValueCollectionImpl extends ArrayList<JsonValue> implements JsonValueArray {
 	private static final long serialVersionUID = -6441638828542391222L;
 	public PlotValueCollectionImpl(){
 	}
-	public PlotValueCollectionImpl(Collection<PlotValue> collection){
+	public PlotValueCollectionImpl(Collection<JsonValue> collection){
 		super(collection);
 	}
 	@Override

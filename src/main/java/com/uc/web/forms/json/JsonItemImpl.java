@@ -1,8 +1,8 @@
-package com.uc.web.forms.ui.flot;
+package com.uc.web.forms.json;
 
-public class PlotItemImpl extends PlotValueImpl implements PlotItem {
+public class JsonItemImpl extends JsonValueImpl implements JsonItem {
 	private String name;
-	public PlotItemImpl(String name, Object value){
+	public JsonItemImpl(String name, Object value){
 		this.name=name;
 		setValue(value);
 	}
@@ -12,7 +12,5 @@ public class PlotItemImpl extends PlotValueImpl implements PlotItem {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	
+	}	
 }

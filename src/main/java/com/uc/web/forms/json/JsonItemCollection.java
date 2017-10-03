@@ -1,13 +1,13 @@
-package com.uc.web.forms.ui.flot;
+package com.uc.web.forms.json;
 
 import java.util.List;
 
-public interface PlotItemCollection extends List<PlotItem>, PlotValue{
+public interface JsonItemCollection extends List<JsonItem>, JsonValue{
 	@Override
-	default Object getValue() {
+	default JsonValue getValue() {
 		return this;
 	}
-	default PlotItemCollection addValue(PlotItem item){
+	default JsonItemCollection addItem(JsonItem item){
 		add(item);
 		return this;
 	}

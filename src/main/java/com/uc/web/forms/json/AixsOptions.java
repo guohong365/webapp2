@@ -1,14 +1,13 @@
-package com.uc.web.forms.ui.flot;
+package com.uc.web.forms.json;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AixsOptions extends PlotItemCollectionImpl {
-	private static final long serialVersionUID = -1730331508996510105L;
-	Map<Class<?>, PlotItem> items;
-	public AixsOptions(String name, PlotItem[] options){
+public class AixsOptions  {
+	Map<Class<?>, JsonItem> items;
+	public AixsOptions(String name, JsonItem[] options){
 		items=new HashMap<>();
-		for(PlotItem item:options){
+		for(JsonItem item:options){
 			items.put(item.getClass(), item);
 		}		
 	}
@@ -26,7 +25,7 @@ public class AixsOptions extends PlotItemCollectionImpl {
     		return value;
     	}
     }
-	public class Position extends PlotItemImpl{
+	public class Position extends JsonItemImpl{
 		public Position(AIXS_POSITION position){
 			super("position", position.value);
 		}
@@ -42,7 +41,7 @@ public class AixsOptions extends PlotItemCollectionImpl {
 			return value;
 		}
 	}
-	public class Mode extends PlotItemImpl {
+	public class Mode extends JsonItemImpl {
 		public Mode(AIXS_MODE mode){
 			super("mode", mode.value());
 		}

@@ -1,6 +1,6 @@
-package com.uc.web.forms.ui.flot;
+package com.uc.web.forms.json;
 
-public interface PlotItem extends PlotValue {
+public interface JsonItem extends JsonValue {
 	String getName();
 	@Override
 	default String toJson() {
@@ -9,7 +9,7 @@ public interface PlotItem extends PlotValue {
 		if(getName()!=null){
 			builder.append('"').append(getName()).append('"').append(':');
 		}
-		builder.append(PlotValue.super.toJson());
+		builder.append(JsonValue.super.toJson());
 		return builder.toString();
 	}
 }

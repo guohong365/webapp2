@@ -1,6 +1,8 @@
-package com.uc.web.forms.ui.flot;
+package com.uc.web.forms.json;
 
-public class LegendOption extends PlotItemImpl {
+import com.uc.web.forms.JsonString;
+
+public class LegendOption implements JsonString {
 	private static final String NAME="legend";
 	public static final String POSITION_NE="ne";
 	public static final String POSITION_NW="nw";
@@ -25,7 +27,6 @@ public class LegendOption extends PlotItemImpl {
 	private String sorted; //: null/false, true, "ascending", "descending", "reverse", or a comparator
 	
 	public LegendOption() {
-		super(NAME, null);
 	}
 	
 	public String getLabelFormatter() {

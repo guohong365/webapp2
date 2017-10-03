@@ -1,10 +1,10 @@
-package com.uc.web.forms.ui.flot;
+package com.uc.web.forms.json;
 
-public class PlotValueImpl implements PlotValue {
-	public PlotValueImpl(){
+public class JsonValueImpl implements JsonValue {
+	public JsonValueImpl(){
 		
 	}
-	public PlotValueImpl(Object value){
+	public JsonValueImpl(Object value){
 		this.value=value;
 	}
 	private Object value;
