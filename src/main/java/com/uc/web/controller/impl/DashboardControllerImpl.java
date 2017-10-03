@@ -1,6 +1,7 @@
 package com.uc.web.controller.impl;
 
 import org.springframework.ui.Model;
+
 import com.uc.web.controller.ControllerBaseImpl;
 import com.uc.web.controller.DashboardController;
 import com.uc.web.controller.utils.DashboardManager;
@@ -33,7 +34,14 @@ public class DashboardControllerImpl extends ControllerBaseImpl implements Dashb
 
 	@Override
 	public String postDashboardItem(String name, String jsonParam, Model model) {
+		System.err.println(getClass().getName() + " name:" + getModuleName());
+		System.err.println(getManager().toString());		
 		DashboardItem item=getManager().find(name);
-		return item.doPost(jsonParam, model);
+		if(item !=null){
+			return item.doPost(jsonParam, model);
+		}else {
+			getLogger().error("item ["+name+"] not found.");
+			return "{\"error\":\"item ["+getModuleName() +"] not found.\"}";
+		}
 	}
 }

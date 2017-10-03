@@ -1,6 +1,6 @@
-package com.uc.web.forms.ui.plot;
+package com.uc.web.forms.ui.flot;
 
-public class LegendOption extends PlotOptionBase{
+public class LegendOption extends PlotItemImpl {
 	private static final String NAME="legend";
 	public static final String POSITION_NE="ne";
 	public static final String POSITION_NW="nw";
@@ -13,6 +13,7 @@ public class LegendOption extends PlotOptionBase{
 	public static final String SORTED_DESCENDING="\"descending\"";
 	public static final String SORTED_REVERSE="\"reverse\"";
 	
+	private boolean show;
 	private String labelFormatter; //: null or (fn: string, series object -> string)
 	private String labelBoxBorderColor; //color
 	private Integer noColumns; //: number
@@ -24,7 +25,7 @@ public class LegendOption extends PlotOptionBase{
 	private String sorted; //: null/false, true, "ascending", "descending", "reverse", or a comparator
 	
 	public LegendOption() {
-		super(NAME);
+		super(NAME, null);
 	}
 	
 	public String getLabelFormatter() {
@@ -84,7 +85,7 @@ public class LegendOption extends PlotOptionBase{
 	@Override
 	public String toJson() {
 		StringBuilder builder=new StringBuilder();
-		builder.append("\"legend\":{")
+		builder
 			.append("\"show\":").append(isShow())
 			.append(getLabelFormatter()==null ? "" : ",\"labelFormatter\":" + getLabelFormatter())
 			.append(getLabelBoxBorderColor() == null ? "" : ",\"labelBoxBorderColor\":" + getLabelBoxBorderColor())
@@ -97,5 +98,15 @@ public class LegendOption extends PlotOptionBase{
 			.append(getSorted()== null ? "" : ",\"sorted\":" + getSorted());
 		return builder.toString();
 	}
+
+	public boolean isShow() {
+		return show;
+	}
+
+	public void setShow(boolean show) {
+		this.show = show;
+	}
+
+	
 	
 }

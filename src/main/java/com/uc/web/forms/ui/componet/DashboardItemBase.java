@@ -8,7 +8,8 @@ public abstract class DashboardItemBase extends ControllerBaseImpl implements Da
 	
 	protected void doProcessGet(Model model){
 	}
-	protected void doProcessPost(String jsonString, Model model){
+	protected String doProcessPost(String params, Model model){
+		return "";
 	}
 
 	@Override
@@ -19,9 +20,8 @@ public abstract class DashboardItemBase extends ControllerBaseImpl implements Da
 		
 
 	@Override
-	public String doPost(String jsonString, Model model) {
-		doProcessPost(jsonString, model);
-		return getPageBasePath();
+	public String doPost(String params, Model model) {
+		return doProcessPost(params, model);
 	}
 
 }

@@ -6,6 +6,6 @@ import com.uc.web.controller.ControllerBase;
 
 public interface DashboardItem extends ControllerBase {
 	String doGet(Model model);
-	String doPost(String jsonParam, Model model);
+	String doPost(String params, Model model);
 		
 }

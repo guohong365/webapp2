@@ -22,23 +22,23 @@ public class DashboardControllerProxyBase extends ControllerProxyBaseImpl implem
 			Model model) {
 		getLogger().trace("pathVaialbe name :" + name);
 		if(getLogger().isTraceEnabled()){
-			System.err.println("controller instance :" + getController().getClass());
+			System.err.println("controller instance :" + getController().getClass() + " name [" + getController().getModuleName() + "]");
 		}
 		return getController().getDashboardItem(name, model);
 	}
 
 	@Override
-	@RequestMapping(value="/{name}", method=RequestMethod.POST)
+	@RequestMapping(value="/{name}", method=RequestMethod.POST, produces="application/json;charset=utf-8;")
 	@ResponseBody
-	public String postDashboardItem(
+	public String postDashboardItem( 
 			@PathVariable(value="name")
 			String name,
 			@RequestBody
-			String jsonParam, Model model) {
+			String params, Model model) {
 		getLogger().trace("pathVaialbe name :" + name);
 		if(getLogger().isTraceEnabled()){
-			System.err.println("param :" + jsonParam );
+			System.err.println("param :" + params.toString() );
 		}
-		return getController().postDashboardItem(name, jsonParam, model);
+		return getController().postDashboardItem(name, params, model);
 	}
 }
