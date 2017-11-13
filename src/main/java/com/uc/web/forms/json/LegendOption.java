@@ -3,7 +3,7 @@ package com.uc.web.forms.json;
 import com.uc.web.forms.JsonString;
 
 public class LegendOption implements JsonString {
-	private static final String NAME="legend";
+	//private static final String NAME="legend";
 	public static final String POSITION_NE="ne";
 	public static final String POSITION_NW="nw";
 	public static final String POSITION_SE="se";
