@@ -35,8 +35,10 @@ public class ExcelListExportorImpl<EntityType> extends AbstractExcelExportor imp
 	public ExcelSheetHeader getHeader() {
 		return header;
 	}
+	@Override
 	public void setHeader(ExcelSheetHeader header) {
 		this.header = header;
+		header.setOwner(this);
 	}
 	
 	@Override

@@ -6,5 +6,7 @@ public interface ExcelSheetHeader extends ExcelColumn {
 
 	ExcelExportOptions getOptions();
 	int export(Sheet sheet, int beginRow, int startCol);
+	void setOwner(ExcelExportor owner);
+	ExcelExportor getOwner();
 
 }

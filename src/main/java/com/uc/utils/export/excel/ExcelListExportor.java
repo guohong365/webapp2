@@ -17,5 +17,6 @@ public interface ExcelListExportor<EntityType> extends ExcelExportor {
 	Collection<? extends EntityType> getData();
 	ExcelSheetHeader getHeader();
 	ValueFormatter<EntityType> getFormatter();
-	Boolean getAutoFitWidth(); 
+	Boolean getAutoFitWidth();
+	void setHeader(ExcelSheetHeader header); 
 }

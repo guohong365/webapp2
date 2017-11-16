@@ -25,10 +25,11 @@ public class ExcelSheetHeaderImpl extends ExcelColumnImpl implements ExcelSheetH
 	private CellStyle titleStyle;
 	private CellStyle columnHeaderStyle;	
 	private ExcelExportor owner;
-	
+	@Override
 	public void setOwner(ExcelExportor owner) {
 		this.owner = owner;
 	}
+	@Override
 	public ExcelExportor getOwner() {
 		return owner;
 	}
