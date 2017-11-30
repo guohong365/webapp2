@@ -212,7 +212,7 @@ public abstract class AbstractListControllerBase
 		onBeforeSelectPostList(user, queryForm);
 		getLogger().trace(queryForm.toString());
 		getLogger().trace("------------------");		
-		
+		onBeforeSelect(user, queryForm);
 		getLogger().trace("------查询数据----------");
 		List<?> list=getService().select(queryForm, pageCtrl);		
 		getLogger().trace("------获得数据[%d]----", list.size());
