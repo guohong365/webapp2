@@ -33,7 +33,6 @@ public abstract class AbstractManagedColumnListController<QueryFormType extends 
 
 	public String getShowColumns(String mode, Model model) {
 		ColumnsManager manager = getColumnManager(mode);
-		System.err.println(manager);
 		if(manager!=null) {
 			model.addAttribute(PARAM_NAME_COLUMNS, manager.getColumns());
 		}

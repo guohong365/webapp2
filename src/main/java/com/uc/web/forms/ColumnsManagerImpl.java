@@ -90,10 +90,8 @@ public class ColumnsManagerImpl implements ColumnsManager {
 	@Override
 	public void setShowByFlagString(String showFlags){
 		char[] flags=showFlags.toCharArray();
-		System.err.println("input : " + showFlags);
 		for (ListColumn column : getColumns()){
 			int index=column.getSort();
-			System.err.println("set column ["+ column.getTitle() +"] at [" + column.getSort() +"]");
 			if(index< flags.length){
 				column.setShow(flags[index]!='0');
 			} else {				

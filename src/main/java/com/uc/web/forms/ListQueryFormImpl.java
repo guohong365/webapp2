@@ -42,7 +42,6 @@ public class ListQueryFormImpl extends EntityBase implements ListQueryForm{
 	}	
 	@Override
 	public String getQueryOrderByClause() {
-		System.err.println("getQueryOrderByClause.......");
 		if(StringUtils.isEmpty(queryOrderByClause)){			
 			String column=getQueryOrderColumn();
 			String order=getQueryOrder();
@@ -55,9 +54,7 @@ public class ListQueryFormImpl extends EntityBase implements ListQueryForm{
 	}
 
 	private String getQueryOrderColumn() {
-		System.err.println(getColumnMap().toString());
 		String column= getColumnMap().get(getQueryOrderBy());
-		System.err.println("column: " + column);
 		return column;
 	}
 

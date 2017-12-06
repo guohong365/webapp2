@@ -169,11 +169,9 @@ public abstract class AbstractListControllerBase
 	protected String onPostTablePage(ListQueryForm queryForm, PageCtrlImpl pageCtrl, Model model) {
 		UserProfile user=getUser();
 		getLogger().trace("-----输入条件-----");
-		System.err.println(queryForm.toString());
 				
 		getLogger().trace("-----准备列表数据查询条件----");		
 		onBeforeSelectPagationList(user, queryForm, pageCtrl);
-		System.err.println(queryForm.toString());
 		getLogger().trace("----------------------");
 
 		getLogger().trace("------查询数据----------");
