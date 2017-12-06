@@ -5,9 +5,10 @@ import java.util.Map;
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.util.StringUtils;
 
+import com.uc.web.domain.EntityBase;
 import com.uc.web.domain.security.UserProfile;
 
-public class ListQueryFormImpl implements ListQueryForm{
+public class ListQueryFormImpl extends EntityBase implements ListQueryForm{
 
 	private Map<String, String> columnMap = new HashedMap<>();
 	private Boolean queryAll;	
@@ -15,6 +16,12 @@ public class ListQueryFormImpl implements ListQueryForm{
 	private String queryOrderBy;	
 	private String queryOrderByClause;
 	private UserProfile user;
+	
+	public ListQueryFormImpl() {
+		queryOrder="ASC";
+		buildOrderByColumnMap();
+	}
+	
 	@Override
 	public UserProfile getUser() {
 		return user;
@@ -35,6 +42,7 @@ public class ListQueryFormImpl implements ListQueryForm{
 	}	
 	@Override
 	public String getQueryOrderByClause() {
+		System.err.println("getQueryOrderByClause.......");
 		if(StringUtils.isEmpty(queryOrderByClause)){			
 			String column=getQueryOrderColumn();
 			String order=getQueryOrder();
@@ -47,7 +55,10 @@ public class ListQueryFormImpl implements ListQueryForm{
 	}
 
 	private String getQueryOrderColumn() {
-		return getColumnMap().containsKey(getQueryOrderBy()) ? getColumnMap().get(getQueryOrderBy()) : null;
+		System.err.println(getColumnMap().toString());
+		String column= getColumnMap().get(getQueryOrderBy());
+		System.err.println("column: " + column);
+		return column;
 	}
 
 	@Override

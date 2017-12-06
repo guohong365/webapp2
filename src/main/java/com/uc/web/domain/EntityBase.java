@@ -7,7 +7,7 @@ public abstract class EntityBase implements Cloneable{
 	/**
 	 *输出程度， 0——默认，1——本级类型定义，2——所有，包括父类  
 	 */
-	public static int OUTPUT_DETAIL=0;	
+	public static int OUTPUT_DETAIL=2;	
 	@Override
 	public String toString() {
 		switch(OUTPUT_DETAIL){
