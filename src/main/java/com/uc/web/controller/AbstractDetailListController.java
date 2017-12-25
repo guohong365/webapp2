@@ -27,7 +27,8 @@ public abstract class AbstractDetailListController<
 		DetailQueryFormType queryInput=createQueryForm();
 		queryInput.setQueryMainId(selectedId);
 		getListController().postListPage(queryInput, model);
-		return super.onGetDetailPage(action, selectedId, model);
+		return onGetDetailPage(action, selectedId, model);
+		
 	}	
 	
 	@Override

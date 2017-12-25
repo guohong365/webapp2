@@ -167,19 +167,28 @@ public class AbstractDetailControllerBase extends ControllerBaseImpl {
 		
 	}
 	protected void saveNew(Object detail){
+		getLogger().trace("insert record [" + detail.toString() +"]");
 		getService().insert(detail);
 	}
 	protected void saveModify(Object detail){
+		getLogger().trace("modify record [" + detail.toString() + "]");
 		getService().update(detail);
 	}
 	protected void saveDelete(Object detail){
+		getLogger().trace("delete record [" + detail.toString() +"]");
 		getService().delete(detail);
 	}
-	protected void saveCancelate(Object detail){		
+	protected void saveCancelate(Object detail){
+		getLogger().trace("cancelate record [" + detail.toString() + "]");
+		getService().updateSelective(detail);
 	}
 	protected void saveReactive(Object detail){		
+		getLogger().trace("reactive record ["+ detail.toString()+"]");
+		getService().updateSelective(detail);
 	}
 	protected void saveDisable(Object detail){		
+		getLogger().trace("disable record [" + detail.toString() +"]");
+		getService().updateSelective(detail);
 	}
 	
 
