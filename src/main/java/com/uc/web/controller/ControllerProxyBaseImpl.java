@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,7 +37,7 @@ public abstract class ControllerProxyBaseImpl extends ControllerBaseImpl impleme
 	@Override
 	@ModelAttribute(value=PARAM_NAME_BASE_URL)
 	public String getBaseUri() {
-		return baseUri;
+		return StringUtils.isEmpty(baseUri) ? "": baseUri.substring(1);
 	}	
 	
 	@Override

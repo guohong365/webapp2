@@ -1,7 +1,7 @@
 package com.uc.web.domain;
 
 public abstract class AbstractMenu extends AbstractTreeNamedObject implements Menu {
-	private int order;
+	private Integer order;
 	private String uri;
 
 	@Override

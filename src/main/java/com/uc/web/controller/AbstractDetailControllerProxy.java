@@ -37,7 +37,7 @@ public abstract class AbstractDetailControllerProxy<KeyType,EntityType>
 			@RequestParam(value=PARAM_NAME_ACTION, required=true)
 			String action,
 			@ModelAttribute(value=PARAM_NAME_DETAIL)
-			EntityType detail) {
+			EntityType detail) {		
 		return getController().postDetailPage(action, detail);
 	}
 
