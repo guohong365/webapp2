@@ -85,7 +85,7 @@ public class CalendarUtils {
 		return calendar;
 	}	
 	public static Calendar getDateAfterMonths(Calendar calendar,int months){
-		Calendar c=getDate();
+		Calendar c=getDate(calendar);
 		c.add(Calendar.MONTH, months);
 		return c;
 	}
@@ -117,5 +117,38 @@ public class CalendarUtils {
 	}
 	public static float getSecond(long millisecond){
 		return ((float)millisecond)/1000;
+	}
+	public static Calendar getQuarterBeginDate(int year, int quarter) {
+		switch(quarter) {
+		case 1:
+			return CalendarUtils.getDate(year, 1, 1);
+		case 2:
+			return CalendarUtils.getDate(year, 4, 1);
+		case 3:
+			return CalendarUtils.getDate(year, 7, 1);
+		case 4:
+			return CalendarUtils.getDate(year, 10, 1);
+		}
+		return null;
+	}
+	public static Calendar getQuarterEndDate(int year, int quarter) {
+		switch(quarter) {
+		case 1:
+			return CalendarUtils.getDate(year, 3,31);
+		case 2:
+			return CalendarUtils.getDate(year, 6, 30);
+		case 3:
+			return CalendarUtils.getDate(year, 9, 30);
+		case 4:
+			return CalendarUtils.getDate(year, 12, 31);
+		}
+		return null;
+	}
+	public static int getDateQuarter(Calendar c) {
+		int month=c.get(Calendar.MONTH);
+		if(month <=2) return 1;
+		if(month <=5) return 2;
+		if(month <=8) return 3;
+		return 4;
 	}
 }
