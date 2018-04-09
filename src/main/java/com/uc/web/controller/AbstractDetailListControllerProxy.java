@@ -13,6 +13,7 @@ public abstract class AbstractDetailListControllerProxy<KeyType, EntityType, Det
 
 	private static final String URI_PATH_DETAIL_LIST = "/detail/list";
 	private static final String URI_PATH_DETAIL_LIST_TABLE = "/detail/table";
+
 	
 	@Override
 	@RequestMapping(value=URI_PATH_DETAIL_LIST_TABLE, method=RequestMethod.POST)
@@ -33,6 +34,8 @@ public abstract class AbstractDetailListControllerProxy<KeyType, EntityType, Det
 			Model model) {
 		return getController().postListPage(queryForm, model);
 	}
+	
+	
 
 	@Override
 	public DetailQueryFormType createQueryForm() {

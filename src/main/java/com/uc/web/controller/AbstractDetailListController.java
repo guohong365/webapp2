@@ -1,5 +1,8 @@
 package com.uc.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.ui.Model;
 
 import com.uc.web.forms.DetailListQueryForm;
@@ -13,7 +16,7 @@ public abstract class AbstractDetailListController<
 	implements	DetailListController<KeyType,EntityType, DetailQueryFormType>  {
 	
 	private ListController<DetailQueryFormType> listController;
-
+	
 	public ListController<DetailQueryFormType> getListController() {
 		return listController;
 	}
@@ -22,6 +25,7 @@ public abstract class AbstractDetailListController<
 		this.listController = listController;
 	}
 	
+
 	@Override
 	public String getDetailPage(String action, KeyType selectedId, Model model) {
 		DetailQueryFormType queryInput=createQueryForm();
@@ -50,4 +54,13 @@ public abstract class AbstractDetailListController<
 	public String getListPage(Model model) {
 		return getListController().getListPage(model);
 	}
+	
+	public void exportFile(DetailQueryFormType queryInput, HttpServletRequest request, HttpServletResponse response) {
+		if(getListController() instanceof ExportController) {
+			@SuppressWarnings("unchecked")
+			ExportController<DetailQueryFormType> exportController=(ExportController<DetailQueryFormType>) getListController();
+			exportController.exportFile(queryInput, request, response);
+		}
+	}
+	
 }
