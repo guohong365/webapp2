@@ -30,6 +30,9 @@ public interface ControllerBase extends LoggerSupportor {
 	public static final String EXPORTOR_OPTION_EXTERNAL = "EXTERNAL";
 	public static final String PARAM_NAME_ENTITY_NAME = "entiryName";
 	
+	public static final String DETAIL_POST_RESULT_OK="OK";
+	public static final String DETAIL_POST_RESULT_FAILED="FAILED";
+	
 	UserProfile getUser();
 	Service getService();
 	String getPageBasePath();

@@ -1,9 +1,11 @@
-package com.uc.web.controller;
+package com.uc.web.controller.poxy;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.uc.web.controller.DetailListController;
 import com.uc.web.forms.DetailListQueryForm;
 import com.uc.web.forms.ui.componet.PageCtrlImpl;
 
@@ -17,34 +19,34 @@ public abstract class AbstractDetailListControllerProxy<KeyType, EntityType, Det
 	
 	@Override
 	@RequestMapping(value=URI_PATH_DETAIL_LIST_TABLE, method=RequestMethod.POST)
-	public String postTablePage(
+	public String postDetailTablePage(
 			@ModelAttribute(PARAM_NAME_QUERY_INPUT)
 			DetailQueryFormType queryInput,
 			@ModelAttribute(PARAM_NAME_PAGE_CTRL)
 			PageCtrlImpl pageCtrl,
 			Model model) {
-		return getController().postTablePage(queryInput, pageCtrl, model);
+		return getController().postDetailTablePage(queryInput, pageCtrl, model);
 	}
 
 	@Override
 	@RequestMapping(value=URI_PATH_DETAIL_LIST, method=RequestMethod.POST)
-	public String postListPage(
+	public String postDetailListPage(
 			@ModelAttribute(PARAM_NAME_QUERY_INPUT)
 			DetailQueryFormType queryForm, 
 			Model model) {
-		return getController().postListPage(queryForm, model);
+		return getController().postDetailListPage(queryForm, model);
 	}
 	
 	
 
 	@Override
-	public DetailQueryFormType createQueryForm() {
-		return getController().createQueryForm();
+	public DetailQueryFormType createDetailQueryForm() {
+		return getController().createDetailQueryForm();
 	}	
 
 	@Override	
-	public String getListPage(Model model) {
-		return getController().getListPage(model);
+	public String getDetailListPage(String action, KeyType selectedId, Model model) {
+		return getController().getDetailListPage(action, selectedId,model);
 	}
 
 	@SuppressWarnings("unchecked")

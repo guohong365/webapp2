@@ -1,4 +1,4 @@
-package com.uc.web.controller;
+package com.uc.web.controller.poxy;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -10,7 +10,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
+import com.uc.web.controller.ControllerBase;
+import com.uc.web.controller.ControllerBaseImpl;
 import com.uc.web.forms.editor.BigDecimalEditor;
 import com.uc.web.forms.editor.IntegerEditor;
 import com.uc.web.forms.editor.LongEditor;
@@ -75,5 +76,7 @@ public abstract class ControllerProxyBaseImpl extends ControllerBaseImpl impleme
 		binder.registerCustomEditor(Long.class, new LongEditor());
 		binder.registerCustomEditor(BigDecimal.class, new BigDecimalEditor());		
 	}
+	
+
 	
 }

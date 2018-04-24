@@ -1,4 +1,4 @@
-package com.uc.web.controller;
+package com.uc.web.controller.poxy;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.uc.web.controller.DetailController;
+import com.uc.web.controller.WebAction;
 
 public abstract class AbstractDetailControllerProxy<KeyType,EntityType>
 	extends ControllerProxyBaseImpl
