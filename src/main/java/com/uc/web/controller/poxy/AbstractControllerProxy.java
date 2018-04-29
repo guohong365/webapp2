@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uc.web.controller.WebAction;
+import com.uc.web.domain.security.UserProfile;
 import com.uc.web.forms.ListQueryForm;
 import com.uc.web.forms.ui.componet.PageCtrlImpl;
 
@@ -79,5 +80,11 @@ public class AbstractControllerProxy<KeyType, EntityType,QueryFormType extends L
 		if(getExportController()!=null){
 			super.exportFile(queryForm, request, response);
 		}
+	}
+	
+	@Override
+	@ModelAttribute(value=PARAM_NAME_CURRENT_USER)
+	public UserProfile getUser(){
+		return super.getUser();
 	}
 }

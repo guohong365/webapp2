@@ -4,6 +4,7 @@ package com.uc.web.controller;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.uc.utils.LoggerSupportorImpl;
+import com.uc.web.domain.Orgnization;
 import com.uc.web.domain.security.UserProfile;
 import com.uc.web.service.Service;
 
@@ -36,6 +37,10 @@ public abstract class ControllerBaseImpl extends LoggerSupportorImpl
 		if(principal instanceof UserProfile)
 			return (UserProfile) principal;
 		return null;
+	}
+	@Override
+	public Orgnization getUserOrgnization() {
+		return getUser().getOrgnization();
 	}
 
 	public void setPageBasePath(String pageBasePath) {

@@ -12,9 +12,9 @@ public abstract class EntityBase implements Cloneable{
 	public String toString() {
 		switch(OUTPUT_DETAIL){
 		case 2 :
-		  return ObjectPropertyFormator.format(this, "", true, false, false, false);
+		  return ObjectPropertyFormator.format(this, true, -1);
 		case 1 :
-		  return ObjectPropertyFormator.format(this, "", true, false, false, true);	
+		  return ObjectPropertyFormator.format(this, true, 1);	
 		}
 		return super.toString();
 	}
@@ -24,8 +24,8 @@ public abstract class EntityBase implements Cloneable{
 		return super.clone();
 	}
 	
-	public String toString(boolean withClassName, boolean flat, boolean singleLinePerValue, boolean justThis){
-		return ObjectPropertyFormator.format(this, "", flat, withClassName, singleLinePerValue, justThis);
+	public String toString(boolean withClassName, boolean justThis){
+		return ObjectPropertyFormator.format(this, withClassName, justThis ? 1 : -1);
 	}
 	
 }

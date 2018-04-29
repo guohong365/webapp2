@@ -1,11 +1,13 @@
 package com.uc.web.controller;
 
 import com.uc.utils.LoggerSupportor;
+import com.uc.web.domain.Orgnization;
 import com.uc.web.domain.security.UserProfile;
 import com.uc.web.service.Service;
 
 public interface ControllerBase extends LoggerSupportor {	
 	public static final String PARAM_NAME_ACTION = "action";
+	public static final String PARAM_NAME_CURRENT_USER="currentUser";
 	public static final String PARAM_NAME_DETAIL = "detailInput";
 	public static final String PARAM_NAME_RECORDS = "records";
 	public static final String PARAM_NAME_QUERY_INPUT = "queryInput";
@@ -34,6 +36,7 @@ public interface ControllerBase extends LoggerSupportor {
 	public static final String DETAIL_POST_RESULT_FAILED="FAILED";
 	
 	UserProfile getUser();
+	Orgnization getUserOrgnization();
 	Service getService();
 	String getPageBasePath();
 	String getModuleName();
