@@ -9,6 +9,8 @@ public interface ListQueryForm {
 	void setQueryOrderBy(String orderBy);
 	String getQueryOrderByClause();
 	void setQueryOrderByClause(String orderByClause);
+	String getGroupByClause();
+	void setGroupByClause(String groupByClause);
 	UserProfile getUser();
 	void setUser(UserProfile user);
 }

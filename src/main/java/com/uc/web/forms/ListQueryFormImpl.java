@@ -15,6 +15,7 @@ public class ListQueryFormImpl extends EntityBase implements ListQueryForm{
 	private String queryOrder;
 	private String queryOrderBy;	
 	private String queryOrderByClause;
+	private String groupByClause;
 	private UserProfile user;
 	
 	public ListQueryFormImpl() {
@@ -33,7 +34,14 @@ public class ListQueryFormImpl extends EntityBase implements ListQueryForm{
 	public Map<String, String> getColumnMap() {
 		return columnMap;
 	}
-	
+	@Override
+	public String getGroupByClause() {
+		return groupByClause;
+	}
+	@Override
+	public void setGroupByClause(String groupByClause) {
+		this.groupByClause=groupByClause;		
+	}
 	public Boolean getQueryAll() {
 		return queryAll;
 	}
