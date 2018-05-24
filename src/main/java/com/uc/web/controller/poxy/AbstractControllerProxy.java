@@ -73,7 +73,7 @@ public class AbstractControllerProxy<KeyType, EntityType,QueryFormType extends L
 	}
 
 	@Override
-	@RequestMapping(value=URI_PATH_EXPORT, method=RequestMethod.POST)
+	@RequestMapping(value=URI_PATH_EXPORT, method=RequestMethod.POST, consumes="application/x-www-form-urlencoded;charset=utf-8")
 	public void exportFile(
 			@ModelAttribute(PARAM_NAME_QUERY_INPUT)
 			QueryFormType queryForm, HttpServletRequest request, HttpServletResponse response) {
